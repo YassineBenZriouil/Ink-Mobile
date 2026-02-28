@@ -1,4 +1,4 @@
-import { FONT_SIZES } from '@/theme';
+import COLORS, { FONT_SIZES } from '@/theme';
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
 export const authStyles = ScaledSheet.create({
@@ -41,5 +41,9 @@ export const authStyles = ScaledSheet.create({
     scrollContent: {
         paddingBottom: '100@vs',
         gap: '10@vs',
+    },
+    noNotesText: {
+        color: COLORS.darkGray,
+        fontSize: FONT_SIZES.f16,
     },
 });

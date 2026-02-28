@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import React, { useEffect, useCallback } from 'react';
+import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { authStyles as styles } from './styles';
 import HomeHeader from '@/modules/home/components/homeHeader';
@@ -8,46 +8,18 @@ import PlusButton from '@/modules/home/components/PlusButton';
 import NoteCard from '@/modules/home/components/noteCard';
 import { navigate } from '@/tools/navigation';
 
-import { useNavigation, DrawerActions } from '@react-navigation/native';
+import {
+    useNavigation,
+    DrawerActions,
+    useFocusEffect,
+} from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import COLORS from '@/theme';
 import SideBar from '@/modules/home/components/sideBar';
+import { useGetNotes, NoteItem } from '@/modules/home/hooks/useGetNotes';
 import { tr } from '@/locales/i18n';
 import ThemeIcon from '@/assets/images/brush.png';
 import SettingsIcon from '@/assets/images/gear.png';
-
-const FAKE_NOTES = [
-    {
-        id: '1',
-        title: 'Meeting with Team',
-        body: 'Discuss the new features for the next sprint. Need to prepare slides and demo.',
-        date: new Date('2026-03-01T10:00:00Z'),
-    },
-    {
-        id: '2',
-        title: 'Grocery List',
-        body: 'Milk, Eggs, Bread, Butter, Chicken, Rice, Vegetables.',
-        date: new Date('2026-02-28T14:30:00Z'),
-    },
-    {
-        id: '3',
-        title: 'Workout Plan',
-        body: 'Monday: Chest & Triceps\nTuesday: Back & Biceps\nWednesday: Legs.',
-        date: new Date('2026-02-27T08:00:00Z'),
-    },
-    {
-        id: '4',
-        title: 'Project Ideas',
-        body: '1. AI driven task manager.\n2. Habit tracker with gamification.',
-        date: new Date('2026-02-26T18:45:00Z'),
-    },
-    {
-        id: '5',
-        title: 'Book Recommendations',
-        body: '- The Pragmatic Programmer\n- Clean Code\n- Designing Data-Intensive Applications',
-        date: new Date('2026-02-25T20:15:00Z'),
-    },
-];
 
 const HomeContent = () => {
     const [activeTab, setActiveTab] = React.useState('note');
@@ -58,7 +30,7 @@ const HomeContent = () => {
     };
 
     const handlePlusPress = () => {
-        navigate('NoteDetails');
+        navigate('NoteDetails', { newNote: true });
     };
 
     const handleMenuPress = () => {
@@ -68,15 +40,45 @@ const HomeContent = () => {
     const tabs = [
         {
             id: 'note',
-            label: 'Notes',
+            label: tr('home.notes'),
             icon: require('@/assets/images/notes.png'),
         },
         {
             id: 'todo',
-            label: "Todo's",
+            label: tr('home.todos'),
             icon: require('@/assets/images/todo.png'),
         },
     ];
+
+    const { notes, isLoading, refreshNotes, loadMore } = useGetNotes();
+
+    useFocusEffect(
+        useCallback(() => {
+            refreshNotes();
+        }, [refreshNotes]),
+    );
+
+    const renderEmptyComponent = () => (
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 100,
+            }}
+        >
+            <Text style={styles.noNotesText}>{tr('home.noNotesText')}</Text>
+        </View>
+    );
+
+    const renderItem = ({ item }: { item: NoteItem }) => (
+        <NoteCard
+            title={item.title}
+            body={item.body}
+            date={item.date}
+            onPress={() => navigate('NoteDetails', { noteId: item.id })}
+        />
+    );
 
     const UserName = 'John Doe';
 
@@ -89,21 +91,27 @@ const HomeContent = () => {
                 onTabChange={handleTabChange}
             />
 
-            <ScrollView
+            <FlatList
+                data={notes}
+                keyExtractor={item => item.id}
+                renderItem={renderItem}
                 style={styles.scrollContainer}
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
-            >
-                {FAKE_NOTES.map(note => (
-                    <NoteCard
-                        key={note.id}
-                        title={note.title}
-                        body={note.body}
-                        date={note.date}
-                        onPress={() => console.log('Pressed note', note.id)}
-                    />
-                ))}
-            </ScrollView>
+                ListEmptyComponent={!isLoading ? renderEmptyComponent : null}
+                onEndReached={loadMore}
+                onEndReachedThreshold={0.5}
+                refreshing={isLoading && notes.length === 0}
+                onRefresh={refreshNotes}
+                ListFooterComponent={
+                    isLoading && notes.length > 0 ? (
+                        <ActivityIndicator
+                            color={COLORS.secondary}
+                            style={{ margin: 20 }}
+                        />
+                    ) : null
+                }
+            />
 
             <View style={styles.plusButton}>
                 <PlusButton onPress={handlePlusPress} />
@@ -155,8 +163,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-

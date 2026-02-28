@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { preventMultiPress, usePressScale } from '@/tools/interactions';
+import { tr } from '@/locales/i18n';
 
 interface NoteCardProps {
     title: string;
@@ -45,10 +46,10 @@ const NoteCard: React.FC<NoteCardProps> = ({
                 onPressOut={handlePressOut}
             >
                 <Text style={styles.title} numberOfLines={1}>
-                    {title}
+                    {title || tr('home.noTitle')}
                 </Text>
                 <Text style={styles.body} numberOfLines={1}>
-                    {body}
+                    {body || tr('home.noContent')}
                 </Text>
                 <Text style={styles.dateText}>{displayDate}</Text>
             </Pressable>

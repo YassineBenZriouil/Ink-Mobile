@@ -13,7 +13,7 @@ import styles from './styles';
 import BackIcon from '@/assets/images/back.png';
 import OptionsIcon from '@/assets/images/more.png';
 import { goBack } from '@/tools/navigation';
-
+import { truncateText } from '@/tools/interactions';
 
 interface OptionsProps {
     id: string;
@@ -29,8 +29,12 @@ interface HeaderProps {
     options?: OptionsProps[];
 }
 
-const Header: React.FC<HeaderProps> = ({ back, additionalStyle, title, options }) => {
-
+const Header: React.FC<HeaderProps> = ({
+    back,
+    additionalStyle,
+    title,
+    options,
+}) => {
     return (
         <View style={[styles.container, additionalStyle]}>
             <View style={styles.leftContainer}>
@@ -39,7 +43,9 @@ const Header: React.FC<HeaderProps> = ({ back, additionalStyle, title, options }
                         <Image source={BackIcon} style={styles.icon} />
                     </Pressable>
                 )}
-                {title && <Text style={styles.title}>{title}</Text>}
+                {title && (
+                    <Text style={styles.title}>{truncateText(title, 20)}</Text>
+                )}
             </View>
             <View style={styles.rightContainer}>
                 {options && options.length > 0 && (
