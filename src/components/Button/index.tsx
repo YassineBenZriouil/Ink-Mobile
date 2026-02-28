@@ -10,6 +10,7 @@ import {
     ImageSourcePropType,
     Animated,
 } from 'react-native';
+import { Shadow } from 'react-native-shadow-2';
 
 //styles
 import styles from './styles';
@@ -27,6 +28,7 @@ interface ButtonProps {
     textStyle?: StyleProp<TextStyle>;
     loaderColor?: string;
     variante?: string;
+    withShadow?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -39,7 +41,8 @@ const Button: React.FC<ButtonProps> = ({
     icon,
     iconStyle,
     loaderColor,
-    variante = 'primary'
+    variante = 'primary',
+    withShadow = false
 }) => {
     const handlePress = preventMultiPress(onPress, 1000);
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
@@ -54,29 +57,68 @@ const Button: React.FC<ButtonProps> = ({
         >
             <Animated.View
                 style={[
-                    disabled ? styles.disabled : variante === 'primary' ? styles.primary : styles.secondary,
-                    additionalStyle,
                     { transform: [{ scale: scaleAnim }] },
                 ]}
             >
-                {fetching ? (
-                    <ActivityIndicator
-                        size="small"
-                        color={loaderColor || COLORS.primary}
-                    />
-                ) : (
-                    <>
-                        {text && (
-                            <Text style={[variante === 'primary' ? styles.primaryText : styles.secondaryText, textStyle]}>{text}</Text>
-                        )}
-                        {icon && (
-                            <Image
-                                source={icon}
-                                style={[styles.icon, iconStyle]}
+                {withShadow ? <Shadow
+                    distance={15}
+                    startColor={'rgba(255, 255, 255, 0.15)'}
+                    endColor={'rgba(255, 255, 255, 0)'}
+                    offset={[0, 0]}
+                >
+                    <Animated.View
+                        style={[
+                            disabled ? styles.disabled : variante === 'primary' ? styles.primary : styles.secondary,
+                            additionalStyle,
+                        ]}
+                    >
+                        {fetching ? (
+                            <ActivityIndicator
+                                size="small"
+                                color={loaderColor || COLORS.primary}
                             />
+                        ) : (
+                            <>
+                                {text && (
+                                    <Text style={[variante === 'primary' ? styles.primaryText : styles.secondaryText, textStyle]}>{text}</Text>
+                                )}
+                                {icon && (
+                                    <Image
+                                        source={icon}
+                                        style={[styles.icon, iconStyle]}
+                                    />
+                                )}
+                            </>
                         )}
-                    </>
-                )}
+                    </Animated.View>
+                </Shadow>
+                    : <Animated.View
+                        style={[
+                            disabled ? styles.disabled : variante === 'primary' ? styles.primary : styles.secondary,
+                            additionalStyle,
+                        ]}
+                    >
+                        {fetching ? (
+                            <ActivityIndicator
+                                size="small"
+                                color={loaderColor || COLORS.primary}
+                            />
+                        ) : (
+                            <>
+                                {text && (
+                                    <Text style={[variante === 'primary' ? styles.primaryText : styles.secondaryText, textStyle]}>{text}</Text>
+                                )}
+                                {icon && (
+                                    <Image
+                                        source={icon}
+                                        style={[styles.icon, iconStyle]}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </Animated.View>
+
+                }
             </Animated.View>
         </TouchableOpacity>
     );

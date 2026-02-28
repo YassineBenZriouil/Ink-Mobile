@@ -15,19 +15,6 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     gap: '20@s',
   },
-  secondary: {
-    width: '300@s',
-    height: '50@vs',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '8@ms',
-    backgroundColor: COLORS.primary,
-    borderWidth: '1@ms',
-    borderColor: COLORS.white,
-    color: COLORS.white,
-    flexDirection: 'row',
-    gap: '20@s',
-  },
   disabled: {
     width: '300@s',
     height: '50@vs',
@@ -40,17 +27,10 @@ export default ScaledSheet.create({
     gap: '20@s',
   },
   primaryText: {
-    fontSize: FONT_SIZES.f12,
-    color: COLORS.primary,
-    fontFamily: FONT_FAMILY.SemiBold,
+    fontSize: FONT_SIZES.f10,
+    alignSelf: 'center',
+    color: COLORS.gray,
+    fontFamily: FONT_FAMILY.Regular,
   },
-  secondaryText: {
-    fontSize: FONT_SIZES.f12,
-    color: COLORS.white,
-    fontFamily: FONT_FAMILY.SemiBold,
-  },
-  icon: {
-    width: '24@s',
-    height: '26@vs',
-  },
+
 });

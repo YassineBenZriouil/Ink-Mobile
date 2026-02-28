@@ -11,6 +11,11 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A851B8A3D545490B84101F6B /* IBMPlexSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6E10E0910E84FBA855DE758 /* IBMPlexSans-Bold.ttf */; };
+		7D848AE21E1C4638AA202FBC /* IBMPlexSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F50FDB5CA3E34E579E6938AE /* IBMPlexSans-Light.ttf */; };
+		C40277CBFF8F41F7B0A1B914 /* IBMPlexSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94F60055D7D64C70A003FC87 /* IBMPlexSans-Regular.ttf */; };
+		5F14CFC93CF44988BE807D34 /* IBMPlexSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA45DC426DF84D2188CDCE26 /* IBMPlexSans-SemiBold.ttf */; };
+		E7A162C926004B31853D7EA5 /* Kenia-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB6305E98D0D401297BCA7E8 /* Kenia-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ink/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ink/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F6E10E0910E84FBA855DE758 /* IBMPlexSans-Bold.ttf */ = {isa = PBXFileReference; name = "IBMPlexSans-Bold.ttf"; path = "../src/assets/fonts/IBMPlexSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F50FDB5CA3E34E579E6938AE /* IBMPlexSans-Light.ttf */ = {isa = PBXFileReference; name = "IBMPlexSans-Light.ttf"; path = "../src/assets/fonts/IBMPlexSans-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		94F60055D7D64C70A003FC87 /* IBMPlexSans-Regular.ttf */ = {isa = PBXFileReference; name = "IBMPlexSans-Regular.ttf"; path = "../src/assets/fonts/IBMPlexSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BA45DC426DF84D2188CDCE26 /* IBMPlexSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "IBMPlexSans-SemiBold.ttf"; path = "../src/assets/fonts/IBMPlexSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EB6305E98D0D401297BCA7E8 /* Kenia-Regular.ttf */ = {isa = PBXFileReference; name = "Kenia-Regular.ttf"; path = "../src/assets/fonts/Kenia-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				370899F38A634EC099151816 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -96,6 +107,19 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		370899F38A634EC099151816 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				F6E10E0910E84FBA855DE758 /* IBMPlexSans-Bold.ttf */,
+				F50FDB5CA3E34E579E6938AE /* IBMPlexSans-Light.ttf */,
+				94F60055D7D64C70A003FC87 /* IBMPlexSans-Regular.ttf */,
+				BA45DC426DF84D2188CDCE26 /* IBMPlexSans-SemiBold.ttf */,
+				EB6305E98D0D401297BCA7E8 /* Kenia-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -159,6 +183,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A851B8A3D545490B84101F6B /* IBMPlexSans-Bold.ttf in Resources */,
+				7D848AE21E1C4638AA202FBC /* IBMPlexSans-Light.ttf in Resources */,
+				C40277CBFF8F41F7B0A1B914 /* IBMPlexSans-Regular.ttf in Resources */,
+				5F14CFC93CF44988BE807D34 /* IBMPlexSans-SemiBold.ttf in Resources */,
+				E7A162C926004B31853D7EA5 /* Kenia-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,11 +1,12 @@
-import COLORS, { FONT_SIZES } from '@/theme';
+import COLORS, { FONT_FAMILY, FONT_SIZES } from '@/theme';
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
 export const authStyles = ScaledSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000000',
-        justifyContent: 'center',
+        backgroundColor: COLORS.primary,
+        paddingVertical: '50@vs',
+        justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: '30@s',
     },
@@ -21,6 +22,7 @@ export const authStyles = ScaledSheet.create({
     subtitle: {
         color: COLORS.gray,
         fontSize: FONT_SIZES.f16,
+        fontFamily: FONT_FAMILY.Special,
         marginTop: '10@s',
         textAlign: 'center',
     },
@@ -28,4 +30,11 @@ export const authStyles = ScaledSheet.create({
         width: '100%',
         gap: '15@s',
     },
+    asGuest: {
+        color: COLORS.gray,
+        fontSize: FONT_SIZES.f12,
+        fontFamily: FONT_FAMILY.Regular,
+        marginTop: '10@s',
+        textAlign: 'center',
+    }
 });

@@ -71,12 +71,13 @@ export function usePressScale(scaleValue = 0.95) {
 }
 
 export const defaultShadowStyle = {
-    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowColor: 'rgba(255, 255, 255, 0.5)',
     shadowOffset: {
         width: 0,
         height: 0,
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
     elevation: 5,
 };
 

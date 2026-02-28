@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import WritingFeatherAnim from '@/components/WritingFeatherAnim';
 import { tr } from '@/locales/i18n';
 import { useStatusBarColor } from '@/tools/interactions';
+import ClickableText from '@/components/ClickableText';
 
 const PreAuth = () => {
     useStatusBarColor(styles.container.backgroundColor);
@@ -37,13 +38,16 @@ const PreAuth = () => {
                 <Button
                     text={tr('preauth.login')}
                     onPress={() => { }}
+                    withShadow
                 />
 
                 <Button
                     text={tr('preauth.signin')}
                     onPress={() => { }}
                     variante='secondary'
+                    withShadow
                 />
+                <ClickableText text="Proceed WithOut Syncing Notes" onPress={() => { }} />
             </View>
         </View>
     );
