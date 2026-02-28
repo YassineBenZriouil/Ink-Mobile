@@ -1,6 +1,14 @@
 import React from 'react';
-import { View, Text, Pressable, StyleProp, ViewStyle } from 'react-native';
+import {
+    View,
+    Text,
+    Pressable,
+    StyleProp,
+    ViewStyle,
+    Animated,
+} from 'react-native';
 import styles from './styles';
+import { preventMultiPress, usePressScale } from '@/tools/interactions';
 
 interface NoteCardProps {
     title: string;
@@ -17,7 +25,8 @@ const NoteCard: React.FC<NoteCardProps> = ({
     onPress,
     style,
 }) => {
-    // Format date if it's a Date object
+    const handlePress = onPress ? preventMultiPress(onPress, 1000) : undefined;
+    const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.99);
     const displayDate =
         date instanceof Date
             ? date.toLocaleDateString('en-US', {
@@ -28,22 +37,22 @@ const NoteCard: React.FC<NoteCardProps> = ({
             : date;
 
     return (
-        <Pressable
-            style={({ pressed }) => [
-                styles.container,
-                style,
-                pressed && styles.pressed,
-            ]}
-            onPress={onPress}
-        >
-            <Text style={styles.title} numberOfLines={1}>
-                {title}
-            </Text>
-            <Text style={styles.body} numberOfLines={1}>
-                {body}
-            </Text>
-            <Text style={styles.dateText}>{displayDate}</Text>
-        </Pressable>
+        <Animated.View style={[{ transform: [{ scale: scaleAnim }] }]}>
+            <Pressable
+                style={[styles.container, style]}
+                onPress={handlePress}
+                onPressIn={handlePressIn}
+                onPressOut={handlePressOut}
+            >
+                <Text style={styles.title} numberOfLines={1}>
+                    {title}
+                </Text>
+                <Text style={styles.body} numberOfLines={1}>
+                    {body}
+                </Text>
+                <Text style={styles.dateText}>{displayDate}</Text>
+            </Pressable>
+        </Animated.View>
     );
 };
 

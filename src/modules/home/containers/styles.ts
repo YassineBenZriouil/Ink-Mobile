@@ -34,4 +34,12 @@ export const authStyles = ScaledSheet.create({
         bottom: '20@vs',
         right: '20@s',
     },
+    scrollContainer: {
+        flex: 1,
+        marginTop: '20@vs',
+    },
+    scrollContent: {
+        paddingBottom: '100@vs',
+        gap: '10@vs',
+    },
 });

@@ -13,7 +13,7 @@ interface HomeHeaderProps {
 }
 
 const HomeHeader: React.FC<HomeHeaderProps> = ({
-    title = 'All Notes',
+    title,
     onTitlePress,
     onMenuPress,
 }) => {
@@ -26,16 +26,12 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
 
     return (
         <View style={styles.container}>
-            <Pressable
-                style={styles.leftSection}
-                onPress={handleTitlePress}
-                activeOpacity={0.7}
-            >
+            <Pressable style={styles.leftSection} onPress={handleTitlePress}>
                 <Text style={styles.title}>{title}</Text>
                 <Image source={DOWN_ICON} style={styles.downIcon} />
             </Pressable>
 
-            <Pressable onPress={handleMenuPress} activeOpacity={0.7}>
+            <Pressable onPress={handleMenuPress}>
                 <Image source={BURGER_ICON} style={styles.burgerIcon} />
             </Pressable>
         </View>

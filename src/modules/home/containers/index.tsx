@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { authStyles as styles } from './styles';
 import HomeHeader from '@/modules/home/components/homeHeader';
 import TabToggler from '@/components/TabToggler';
 import PlusButton from '@/modules/home/components/PlusButton';
 import NoteCard from '@/modules/home/components/noteCard';
-import { useNavigation } from '@react-navigation/native';
+import { navigate } from '@/tools/navigation';
+
+import { useNavigation, DrawerActions } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import COLORS from '@/theme';
+import SideBar from '@/modules/home/components/sideBar';
+import { tr } from '@/locales/i18n';
+import ThemeIcon from '@/assets/images/brush.png';
+import SettingsIcon from '@/assets/images/gear.png';
 
 const FAKE_NOTES = [
     {
@@ -41,7 +49,7 @@ const FAKE_NOTES = [
     },
 ];
 
-const Home = () => {
+const HomeContent = () => {
     const [activeTab, setActiveTab] = React.useState('note');
     const navigation = useNavigation();
 
@@ -50,7 +58,11 @@ const Home = () => {
     };
 
     const handlePlusPress = () => {
-        navigation.navigate('NoteDetails');
+        navigate('NoteDetails');
+    };
+
+    const handleMenuPress = () => {
+        navigation.dispatch(DrawerActions.toggleDrawer());
     };
 
     const tabs = [
@@ -66,9 +78,11 @@ const Home = () => {
         },
     ];
 
+    const UserName = 'John Doe';
+
     return (
         <View style={styles.container}>
-            <HomeHeader />
+            <HomeHeader title={UserName} onMenuPress={handleMenuPress} />
             <TabToggler
                 tabs={tabs}
                 activeTab={activeTab}
@@ -76,8 +90,8 @@ const Home = () => {
             />
 
             <ScrollView
-                style={{ flex: 1, marginTop: 20 }}
-                contentContainerStyle={{ paddingBottom: 100 }}
+                style={styles.scrollContainer}
+                contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
                 {FAKE_NOTES.map(note => (
@@ -95,6 +109,48 @@ const Home = () => {
                 <PlusButton onPress={handlePlusPress} />
             </View>
         </View>
+    );
+};
+
+const Drawer = createDrawerNavigator();
+
+const Home = () => {
+    const sideBarItems = [
+        {
+            id: '1',
+            name: tr('app.theme'),
+            icon: ThemeIcon,
+            onPress: () => {
+                console.log('Navigate to Theme settings!');
+            },
+        },
+        {
+            id: '2',
+            name: tr('app.settings'),
+            icon: SettingsIcon,
+            onPress: () => {
+                console.log('Navigate to Settings!');
+            },
+        },
+    ];
+
+    return (
+        <Drawer.Navigator
+            drawerContent={props => (
+                <SideBar sideBarItems={sideBarItems} {...props} />
+            )}
+            screenOptions={{
+                headerShown: false,
+                drawerPosition: 'right',
+                drawerStyle: {
+                    backgroundColor: COLORS.darkGray,
+                },
+                drawerActiveTintColor: COLORS.secondary,
+                drawerInactiveTintColor: COLORS.gray,
+            }}
+        >
+            <Drawer.Screen name="Home" component={HomeContent} />
+        </Drawer.Navigator>
     );
 };
 

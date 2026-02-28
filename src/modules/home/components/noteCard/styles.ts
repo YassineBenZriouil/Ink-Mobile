@@ -7,10 +7,6 @@ export default ScaledSheet.create({
         borderRadius: '15@s',
         padding: '10@s',
     },
-    pressed: {
-        opacity: 0.8,
-        transform: [{ scale: 0.98 }],
-    },
     title: {
         fontFamily: FONT_FAMILY.SemiBold,
         fontSize: FONT_SIZES.f12,
@@ -29,6 +25,6 @@ export default ScaledSheet.create({
     dateText: {
         fontFamily: FONT_FAMILY.Light,
         fontSize: FONT_SIZES.f8,
-        color: COLORS.gray || '#888888',
+        color: COLORS.gray,
     },
 });

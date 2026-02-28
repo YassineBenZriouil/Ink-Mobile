@@ -52,23 +52,63 @@ const Button: React.FC<ButtonProps> = ({
             onPress={handlePress}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
-            activeOpacity={1}
             disabled={disabled || fetching}
         >
-            <Animated.View
-                style={[
-                    { transform: [{ scale: scaleAnim }] },
-                ]}
-            >
-                {withShadow ? <Shadow
-                    distance={15}
-                    startColor={'rgba(255, 255, 255, 0.15)'}
-                    endColor={'rgba(255, 255, 255, 0)'}
-                    offset={[0, 0]}
-                >
+            <Animated.View style={[{ transform: [{ scale: scaleAnim }] }]}>
+                {withShadow ? (
+                    <Shadow
+                        distance={15}
+                        startColor={'rgba(255, 255, 255, 0.15)'}
+                        endColor={'rgba(255, 255, 255, 0)'}
+                        offset={[0, 0]}
+                    >
+                        <Animated.View
+                            style={[
+                                disabled
+                                    ? styles.disabled
+                                    : variante === 'primary'
+                                    ? styles.primary
+                                    : styles.secondary,
+                                additionalStyle,
+                            ]}
+                        >
+                            {fetching ? (
+                                <ActivityIndicator
+                                    size="small"
+                                    color={loaderColor || COLORS.primary}
+                                />
+                            ) : (
+                                <>
+                                    {text && (
+                                        <Text
+                                            style={[
+                                                variante === 'primary'
+                                                    ? styles.primaryText
+                                                    : styles.secondaryText,
+                                                textStyle,
+                                            ]}
+                                        >
+                                            {text}
+                                        </Text>
+                                    )}
+                                    {icon && (
+                                        <Image
+                                            source={icon}
+                                            style={[styles.icon, iconStyle]}
+                                        />
+                                    )}
+                                </>
+                            )}
+                        </Animated.View>
+                    </Shadow>
+                ) : (
                     <Animated.View
                         style={[
-                            disabled ? styles.disabled : variante === 'primary' ? styles.primary : styles.secondary,
+                            disabled
+                                ? styles.disabled
+                                : variante === 'primary'
+                                ? styles.primary
+                                : styles.secondary,
                             additionalStyle,
                         ]}
                     >
@@ -80,7 +120,16 @@ const Button: React.FC<ButtonProps> = ({
                         ) : (
                             <>
                                 {text && (
-                                    <Text style={[variante === 'primary' ? styles.primaryText : styles.secondaryText, textStyle]}>{text}</Text>
+                                    <Text
+                                        style={[
+                                            variante === 'primary'
+                                                ? styles.primaryText
+                                                : styles.secondaryText,
+                                            textStyle,
+                                        ]}
+                                    >
+                                        {text}
+                                    </Text>
                                 )}
                                 {icon && (
                                     <Image
@@ -91,34 +140,7 @@ const Button: React.FC<ButtonProps> = ({
                             </>
                         )}
                     </Animated.View>
-                </Shadow>
-                    : <Animated.View
-                        style={[
-                            disabled ? styles.disabled : variante === 'primary' ? styles.primary : styles.secondary,
-                            additionalStyle,
-                        ]}
-                    >
-                        {fetching ? (
-                            <ActivityIndicator
-                                size="small"
-                                color={loaderColor || COLORS.primary}
-                            />
-                        ) : (
-                            <>
-                                {text && (
-                                    <Text style={[variante === 'primary' ? styles.primaryText : styles.secondaryText, textStyle]}>{text}</Text>
-                                )}
-                                {icon && (
-                                    <Image
-                                        source={icon}
-                                        style={[styles.icon, iconStyle]}
-                                    />
-                                )}
-                            </>
-                        )}
-                    </Animated.View>
-
-                }
+                )}
             </Animated.View>
         </Pressable>
     );
