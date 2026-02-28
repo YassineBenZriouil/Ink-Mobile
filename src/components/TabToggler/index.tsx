@@ -71,18 +71,15 @@ const TabToggler: React.FC<TabTogglerProps> = ({
                             key={tab.id}
                             style={styles.tab}
                             onPress={() => onTabChange(tab.id)}
-                            activeOpacity={0.8}
                         >
                             {tab.icon && (
                                 <Image
                                     source={tab.icon}
-                                    style={[styles.icon, { tintColor: color }]}
+                                    style={styles.icon}
                                     resizeMode="contain"
                                 />
                             )}
-                            <Text style={[styles.text, { color }]}>
-                                {tab.label}
-                            </Text>
+                            <Text style={styles.text}>{tab.label}</Text>
                         </Pressable>
                     );
                 })}

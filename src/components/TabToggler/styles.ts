@@ -4,7 +4,7 @@ import { ScaledSheet } from 'react-native-size-matters/extend';
 export default ScaledSheet.create({
     wrapper: {
         width: '100%',
-        backgroundColor: COLORS.lightGray,
+        backgroundColor: COLORS.darkGray,
         justifyContent: 'center',
         borderRadius: '10@s',
         height: '40@vs',
@@ -35,9 +35,11 @@ export default ScaledSheet.create({
         width: '18@s',
         height: '18@s',
         marginRight: '8@s',
+        tintColor: COLORS.secondary,
     },
     text: {
         fontSize: FONT_SIZES.f13,
         fontFamily: FONT_FAMILY.Regular,
+        color: COLORS.secondary,
     },
 });
