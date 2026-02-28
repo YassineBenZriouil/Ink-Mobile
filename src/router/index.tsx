@@ -5,6 +5,8 @@ import Routes, { RootStackParamList } from './Routes';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const initialRoute = 'Home';
+
 const Router: React.FC = () => {
     return (
         <NavigationContainer>
@@ -13,6 +15,7 @@ const Router: React.FC = () => {
                     headerShown: false,
                     animation: 'fade',
                 }}
+                initialRouteName={initialRoute}
             >
                 {Routes.map(route => (
                     <Stack.Screen

@@ -1,3 +1,4 @@
+
 import { FONT_SIZES } from '@/theme';
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
@@ -28,10 +29,5 @@ export const authStyles = ScaledSheet.create({
         fontSize: FONT_SIZES.f16,
         marginTop: '10@vs',
         textAlign: 'center',
-    },
-    plusButton: {
-        position: 'absolute',
-        bottom: '20@vs',
-        right: '20@s',
     },
 });

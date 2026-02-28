@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import {
-    TouchableOpacity,
+    Pressable,
     Text,
     ActivityIndicator,
     StyleProp,
@@ -40,18 +40,14 @@ const ClickableText: React.FC<ClickableTextProps> = ({
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
 
     return (
-        <TouchableOpacity
+        <Pressable
             onPress={handlePress}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
             activeOpacity={1}
             disabled={disabled || fetching}
         >
-            <Animated.View
-                style={[
-                    { transform: [{ scale: scaleAnim }] },
-                ]}
-            >
+            <Animated.View style={[{ transform: [{ scale: scaleAnim }] }]}>
                 {fetching ? (
                     <ActivityIndicator
                         size="small"
@@ -60,13 +56,14 @@ const ClickableText: React.FC<ClickableTextProps> = ({
                 ) : (
                     <>
                         {text && (
-                            <Text style={[styles.primaryText, textStyle]}>{text}</Text>
+                            <Text style={[styles.primaryText, textStyle]}>
+                                {text}
+                            </Text>
                         )}
                     </>
                 )}
             </Animated.View>
-
-        </TouchableOpacity>
+        </Pressable>
     );
 };
 

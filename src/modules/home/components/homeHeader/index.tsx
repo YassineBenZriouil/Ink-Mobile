@@ -1,0 +1,45 @@
+import React, { memo } from 'react';
+import { View, Text, Pressable, Image } from 'react-native';
+
+import styles from './styles';
+import DOWN_ICON from '@/assets/images/down.png';
+import BURGER_ICON from '@/assets/images/burger.png';
+import { preventMultiPress } from '@/tools/interactions';
+
+interface HomeHeaderProps {
+    title?: string;
+    onTitlePress?: () => void;
+    onMenuPress?: () => void;
+}
+
+const HomeHeader: React.FC<HomeHeaderProps> = ({
+    title = 'All Notes',
+    onTitlePress,
+    onMenuPress,
+}) => {
+    const handleTitlePress = onTitlePress
+        ? preventMultiPress(onTitlePress)
+        : undefined;
+    const handleMenuPress = onMenuPress
+        ? preventMultiPress(onMenuPress)
+        : undefined;
+
+    return (
+        <View style={styles.container}>
+            <Pressable
+                style={styles.leftSection}
+                onPress={handleTitlePress}
+                activeOpacity={0.7}
+            >
+                <Text style={styles.title}>{title}</Text>
+                <Image source={DOWN_ICON} style={styles.downIcon} />
+            </Pressable>
+
+            <Pressable onPress={handleMenuPress} activeOpacity={0.7}>
+                <Image source={BURGER_ICON} style={styles.burgerIcon} />
+            </Pressable>
+        </View>
+    );
+};
+
+export default memo(HomeHeader);

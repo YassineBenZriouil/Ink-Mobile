@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import {
-    TouchableOpacity,
+    Pressable,
     Text,
     ActivityIndicator,
     StyleProp,
@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps> = ({
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
 
     return (
-        <TouchableOpacity
+        <Pressable
             onPress={handlePress}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
@@ -120,7 +120,7 @@ const Button: React.FC<ButtonProps> = ({
 
                 }
             </Animated.View>
-        </TouchableOpacity>
+        </Pressable>
     );
 };
 

@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { authStyles as styles } from './styles';
-import LOGO from '@/assets/images/logo.png'
-import Button from '@/components/Button';
+import HomeHeader from '@/modules/home/components/homeHeader';
+import TabToggler from '@/components/TabToggler';
+import PlusButton from '@/components/PlusButton';
+import { useNavigation } from '@react-navigation/native';
 
-const PreAuth = () => {
+const Home = () => {
+    const [activeTab, setActiveTab] = React.useState('note');
+    const navigation = useNavigation();
     useEffect(() => {
-        // Hide the splash screen once the component is mounted
         const init = async () => {
             try {
                 await RNBootSplash.hide({ fade: true });
@@ -16,29 +19,46 @@ const PreAuth = () => {
                 console.warn('Bootsplash hide error:', error);
             }
         };
-
         init();
     }, []);
 
+    const handleTabChange = (tabId: string) => {
+        setActiveTab(tabId);
+    };
+
+    const handlePlusPress = () => {
+        navigation.navigate('NoteDetails');
+    };
+
+    const tabs = [
+        {
+            id: 'note',
+            label: 'Notes',
+            icon: require('@/assets/images/notes.png'),
+        },
+        {
+            id: 'todo',
+            label: "Todo's",
+            icon: require('@/assets/images/todo.png'),
+        },
+    ];
+
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#000000" />
-
-            <View style={styles.logoContainer}>
-                <Image
-                    source={LOGO}
-                    style={styles.logo}
-                />
-                <Text style={styles.title}>INK</Text>
-                <Text style={styles.subtitle}>Hoooooooooooooooooooooooome</Text>
+            <HomeHeader />
+            <TabToggler
+                tabs={tabs}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+            />
+            <View style={styles.plusButton}>
+                <PlusButton onPress={handlePlusPress} />
             </View>
-
-
         </View>
     );
 };
 
-export default PreAuth;
+export default Home;
 
 
 

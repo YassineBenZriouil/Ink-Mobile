@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, Image, Pressable, StatusBar } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { authStyles as styles } from './styles';
 import LOGO from '@/assets/images/logo.png'
 import Button from '@/components/Button';
 import WritingFeatherAnim from '@/components/WritingFeatherAnim';
 import { tr } from '@/locales/i18n';
-import { useStatusBarColor } from '@/tools/interactions';
 import ClickableText from '@/components/ClickableText';
 
 const PreAuth = () => {
-    useStatusBarColor(styles.container.backgroundColor);
 
     useEffect(() => {
         // Hide the splash screen once the component is mounted

@@ -6,5 +6,4 @@ const FONT_FAMILY = {
   Special: 'Kenia-Regular',
 };
 
-
 export default FONT_FAMILY;

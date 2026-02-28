@@ -8,11 +8,6 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#000000"
-        translucent={true}
-      />
       <View style={styles.container}>
         <Router />
       </View>
