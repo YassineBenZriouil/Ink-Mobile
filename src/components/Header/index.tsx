@@ -9,11 +9,13 @@ import {
     ImageSourcePropType,
 } from 'react-native';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
-import styles from './styles';
+import useStyles from './styles';
+
 import BackIcon from '@/assets/images/back.png';
 import OptionsIcon from '@/assets/images/more.png';
 import { goBack } from '@/tools/navigation';
 import { truncateText } from '@/tools/interactions';
+import { useTheme } from '@/contexts/themeContext';
 
 interface OptionsProps {
     id: string;
@@ -35,6 +37,8 @@ const Header: React.FC<HeaderProps> = ({
     title,
     options,
 }) => {
+    const styles = useStyles();
+
     return (
         <View style={[styles.container, additionalStyle]}>
             <View style={styles.leftContainer}>

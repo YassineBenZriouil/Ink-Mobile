@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { authStyles as styles } from './styles';
@@ -7,6 +7,7 @@ import TabToggler from '@/components/TabToggler';
 import PlusButton from '@/modules/home/components/PlusButton';
 import NoteCard from '@/modules/home/components/noteCard';
 import { navigate } from '@/tools/navigation';
+import ThemesSelector from '@/components/ThmesSelector';
 
 import {
     useNavigation,
@@ -22,7 +23,7 @@ import ThemeIcon from '@/assets/images/brush.png';
 import SettingsIcon from '@/assets/images/gear.png';
 
 const HomeContent = () => {
-    const [activeTab, setActiveTab] = React.useState('note');
+    const [activeTab, setActiveTab] = useState('note');
     const navigation = useNavigation();
 
     const handleTabChange = (tabId: string) => {
@@ -106,7 +107,7 @@ const HomeContent = () => {
                 ListFooterComponent={
                     isLoading && notes.length > 0 ? (
                         <ActivityIndicator
-                            color={COLORS.secondary}
+                            color={theme.secondary}
                             style={{ margin: 20 }}
                         />
                     ) : null
@@ -122,14 +123,29 @@ const HomeContent = () => {
 
 const Drawer = createDrawerNavigator();
 
+const themes = [
+    {
+        id: '1',
+        name: 'Dark Theme',
+        icon: 'https://via.placeholder.com/24', // Update icon paths accordingly
+    },
+    {
+        id: '2',
+        name: 'Light Theme',
+        icon: 'https://via.placeholder.com/24',
+    },
+];
+
 const Home = () => {
+    const [isThemeSelectorVisible, setIsThemeSelectorVisible] = useState(false);
+
     const sideBarItems = [
         {
             id: '1',
             name: tr('app.theme'),
             icon: ThemeIcon,
             onPress: () => {
-                console.log('Navigate to Theme settings!');
+                setIsThemeSelectorVisible(true);
             },
         },
         {
@@ -142,23 +158,37 @@ const Home = () => {
         },
     ];
 
+    const handleThemeClick = (theme: any) => {
+        console.log('Selected theme:', theme);
+        setIsThemeSelectorVisible(false);
+    };
+
     return (
-        <Drawer.Navigator
-            drawerContent={props => (
-                <SideBar sideBarItems={sideBarItems} {...props} />
-            )}
-            screenOptions={{
-                headerShown: false,
-                drawerPosition: 'right',
-                drawerStyle: {
-                    backgroundColor: COLORS.darkGray,
-                },
-                drawerActiveTintColor: COLORS.secondary,
-                drawerInactiveTintColor: COLORS.gray,
-            }}
-        >
-            <Drawer.Screen name="Home" component={HomeContent} />
-        </Drawer.Navigator>
+        <>
+            <Drawer.Navigator
+                drawerContent={props => (
+                    <SideBar sideBarItems={sideBarItems} {...props} />
+                )}
+                screenOptions={{
+                    headerShown: false,
+                    drawerPosition: 'right',
+                    drawerStyle: {
+                        backgroundColor: theme.darkGray,
+                    },
+                    drawerActiveTintColor: theme.secondary,
+                    drawerInactiveTintColor: theme.gray,
+                }}
+            >
+                <Drawer.Screen name="Home" component={HomeContent} />
+            </Drawer.Navigator>
+
+            <ThemesSelector
+                visible={isThemeSelectorVisible}
+                onClose={() => setIsThemeSelectorVisible(false)}
+                onThemeClick={handleThemeClick}
+                theme={themes}
+            />
+        </>
     );
 };
 

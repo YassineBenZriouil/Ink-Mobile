@@ -13,9 +13,9 @@ import {
 import { Shadow } from 'react-native-shadow-2';
 
 //styles
-import styles from './styles';
-import COLORS from '@/theme';
+import useStyles from './styles';
 import { preventMultiPress, usePressScale } from '@/tools/interactions';
+import { useTheme } from '@/contexts/themeContext';
 
 interface ClickableTextProps {
     text: string;
@@ -39,19 +39,21 @@ const ClickableText: React.FC<ClickableTextProps> = ({
     const handlePress = preventMultiPress(onPress, 1000);
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
 
+    const styles = useStyles();
+    const { theme } = useTheme();
+
     return (
         <Pressable
             onPress={handlePress}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
-            activeOpacity={1}
             disabled={disabled || fetching}
         >
             <Animated.View style={[{ transform: [{ scale: scaleAnim }] }]}>
                 {fetching ? (
                     <ActivityIndicator
                         size="small"
-                        color={loaderColor || COLORS.primary}
+                        color={loaderColor || theme.primary}
                     />
                 ) : (
                     <>

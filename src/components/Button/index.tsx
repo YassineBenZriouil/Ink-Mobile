@@ -13,9 +13,9 @@ import {
 import { Shadow } from 'react-native-shadow-2';
 
 //styles
-import styles from './styles';
-import COLORS from '@/theme';
+import useStyles from './styles';
 import { preventMultiPress, usePressScale } from '@/tools/interactions';
+import { useTheme } from '@/contexts/themeContext';
 
 interface ButtonProps {
     onPress: () => void;
@@ -42,10 +42,13 @@ const Button: React.FC<ButtonProps> = ({
     iconStyle,
     loaderColor,
     variante = 'primary',
-    withShadow = false
+    withShadow = false,
 }) => {
     const handlePress = preventMultiPress(onPress, 1000);
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
+
+    const styles = useStyles();
+    const { theme } = useTheme();
 
     return (
         <Pressable
@@ -75,7 +78,7 @@ const Button: React.FC<ButtonProps> = ({
                             {fetching ? (
                                 <ActivityIndicator
                                     size="small"
-                                    color={loaderColor || COLORS.primary}
+                                    color={loaderColor || theme.primary}
                                 />
                             ) : (
                                 <>
@@ -115,7 +118,7 @@ const Button: React.FC<ButtonProps> = ({
                         {fetching ? (
                             <ActivityIndicator
                                 size="small"
-                                color={loaderColor || COLORS.primary}
+                                color={loaderColor || theme.primary}
                             />
                         ) : (
                             <>

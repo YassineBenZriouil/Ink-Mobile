@@ -65,7 +65,7 @@ const TabToggler: React.FC<TabTogglerProps> = ({
                 )}
                 {tabs.map(tab => {
                     const isActive = activeTab === tab.id;
-                    const color = isActive ? COLORS.secondary : COLORS.primary;
+                    const color = isActive ? theme.secondary : theme.primary;
                     return (
                         <Pressable
                             key={tab.id}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Image, TextInput } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useDeleteNote } from '@/hook/useDeleteNote';
+import GlobalConfirmationPopUp from '@/components/GlobalConfirmationPopUp';
 import { authStyles as styles } from './styles';
 import Header from '@/components/Header';
 import TrashIcon from '@/assets/images/trash.png';
@@ -14,15 +16,18 @@ import { setStorage } from '@/tools/storage';
 
 const NoteDetails = () => {
     const route = useRoute<any>();
+    const navigation = useNavigation<any>();
     const { newNote, noteId: routeNoteId } = route.params || {};
 
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [date, setDate] = useState<string | null>(null);
     const [noteId, setNoteId] = useState<string | null>(routeNoteId || null);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
     const { addNote } = useAddNote();
     const { note } = useGetNote(routeNoteId);
+    const { deleteNote } = useDeleteNote();
 
     // If param newNote is true, generate an ID instantly using useAddNote
     useEffect(() => {
@@ -72,12 +77,21 @@ const NoteDetails = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const handleDeleteConfirm = () => {
+        if (noteId) {
+            deleteNote(noteId);
+            setNoteId(null); // Clear ID ref so autosave doesn't reinstate it immediately
+        }
+        setIsDeleteModalVisible(false);
+        navigation.navigate('Home');
+    };
+
     const headerOptions = [
         {
             id: '1',
             name: tr('app.delete'),
             icon: TrashIcon,
-            onPress: () => console.log('Settings'),
+            onPress: () => setIsDeleteModalVisible(true),
         },
         {
             id: '2',
@@ -114,7 +128,7 @@ const NoteDetails = () => {
             <TextInput
                 style={styles.titleInput}
                 placeholder={tr('noteDetails.titlePlaceHolder')}
-                placeholderTextColor={COLORS.darkGray}
+                placeholderTextColor={theme.darkGray}
                 multiline
                 value={title}
                 onChangeText={setTitle}
@@ -122,11 +136,18 @@ const NoteDetails = () => {
             <TextInput
                 style={styles.bodyInput}
                 placeholder={tr('noteDetails.bodyPlaceHolder')}
-                placeholderTextColor={COLORS.darkGray}
+                placeholderTextColor={theme.darkGray}
                 multiline
                 textAlignVertical="top"
                 value={body}
                 onChangeText={setBody}
+            />
+            <GlobalConfirmationPopUp
+                visible={isDeleteModalVisible}
+                onClose={() => setIsDeleteModalVisible(false)}
+                onConfirm={handleDeleteConfirm}
+                title={tr('app.delete') || 'Delete Note'}
+                message={tr('app.deleteConfirmation')}
             />
         </View>
     );

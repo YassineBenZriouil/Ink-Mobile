@@ -7,6 +7,9 @@ export default {
             settings: 'Settings',
             delete: 'Delete',
             share: 'Share',
+            cancel: 'Cancel',
+            confirm: 'Confirm',
+            deleteConfirmation: 'Are you sure you want to delete this note?',
         },
         preauth: {
             title: 'Where Thoughts Find Grace',

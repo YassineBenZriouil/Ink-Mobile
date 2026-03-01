@@ -43,7 +43,7 @@ export const authStyles = ScaledSheet.create({
         gap: '10@vs',
     },
     noNotesText: {
-        color: COLORS.darkGray,
+        color: theme.darkGray,
         fontSize: FONT_SIZES.f16,
     },
 });

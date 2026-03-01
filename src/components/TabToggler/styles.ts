@@ -1,10 +1,17 @@
-import COLORS, { FONT_FAMILY, FONT_SIZES } from '@/theme';
+import { useMemo } from 'react';
+import { FONT_FAMILY, FONT_SIZES } from '@/theme';
 import { ScaledSheet } from 'react-native-size-matters/extend';
+import { useTheme } from '@/contexts/themeContext';
 
-export default ScaledSheet.create({
+const useStyles = () => {
+    const { theme } = useTheme();
+
+    return useMemo(
+        () =>
+            ScaledSheet.create({
     wrapper: {
         width: '100%',
-        backgroundColor: COLORS.darkGray,
+        backgroundColor: theme.darkGray,
         justifyContent: 'center',
         borderRadius: '10@s',
         height: '40@vs',
@@ -20,7 +27,7 @@ export default ScaledSheet.create({
     indicator: {
         position: 'absolute',
         height: '100%',
-        backgroundColor: COLORS.primary,
+        backgroundColor: theme.primary,
         borderRadius: '8@s',
     },
     tab: {
@@ -35,11 +42,11 @@ export default ScaledSheet.create({
         width: '18@s',
         height: '18@s',
         marginRight: '8@s',
-        tintColor: COLORS.secondary,
+        tintColor: theme.secondary,
     },
     text: {
         fontSize: FONT_SIZES.f13,
         fontFamily: FONT_FAMILY.Regular,
-        color: COLORS.secondary,
+        color: theme.secondary,
     },
-});
+} );

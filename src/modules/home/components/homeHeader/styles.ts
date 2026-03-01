@@ -9,7 +9,7 @@ export default ScaledSheet.create({
         alignItems: 'center',
         paddingHorizontal: '20@s',
         paddingVertical: '12@vs',
-        backgroundColor: COLORS.primary,
+        backgroundColor: theme.primary,
     },
     leftSection: {
         flexDirection: 'row',
@@ -20,16 +20,16 @@ export default ScaledSheet.create({
     title: {
         fontSize: FONT_SIZES.f13,
         fontFamily: FONT_FAMILY.SemiBold,
-        color: COLORS.secondary,
+        color: theme.secondary,
     },
     downIcon: {
         width: '22@s',
         height: '22@s',
-        tintColor: COLORS.secondary,
+        tintColor: theme.secondary,
     },
     burgerIcon: {
         width: '22@s',
         height: '22@s',
-        tintColor: COLORS.secondary,
+        tintColor: theme.secondary,
     },
 });

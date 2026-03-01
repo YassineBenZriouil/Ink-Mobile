@@ -31,19 +31,19 @@ export const authStyles = ScaledSheet.create({
         textAlign: 'center',
     },
     titleInput: {
-        color: COLORS.secondary,
+        color: theme.secondary,
         fontSize: FONT_SIZES.f18,
         fontWeight: 'bold',
         paddingVertical: '10@vs',
     },
     bodyInput: {
         flex: 1,
-        color: COLORS.secondary,
+        color: theme.secondary,
         fontSize: FONT_SIZES.f13,
         paddingTop: '10@vs',
     },
     dateText: {
-        color: COLORS.darkGray,
+        color: theme.darkGray,
         fontSize: FONT_SIZES.f11,
         marginBottom: '5@vs',
     },
