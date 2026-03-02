@@ -1,7 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
-import RNBootSplash from 'react-native-bootsplash';
-import { authStyles as styles } from './styles';
 import HomeHeader from '@/modules/home/components/homeHeader';
 import TabToggler from '@/components/TabToggler';
 import PlusButton from '@/modules/home/components/PlusButton';
@@ -21,8 +19,12 @@ import { useGetNotes, NoteItem } from '@/modules/home/hooks/useGetNotes';
 import { tr } from '@/locales/i18n';
 import ThemeIcon from '@/assets/images/brush.png';
 import SettingsIcon from '@/assets/images/gear.png';
+import useStyles from './styles';
+import { useTheme } from '@/contexts/themeContext';
 
 const HomeContent = () => {
+    const { theme } = useTheme();
+    const styles = useStyles();
     const [activeTab, setActiveTab] = useState('note');
     const navigation = useNavigation();
 
@@ -137,6 +139,7 @@ const themes = [
 ];
 
 const Home = () => {
+    const styles = useStyles();
     const [isThemeSelectorVisible, setIsThemeSelectorVisible] = useState(false);
 
     const sideBarItems = [
@@ -162,6 +165,8 @@ const Home = () => {
         console.log('Selected theme:', theme);
         setIsThemeSelectorVisible(false);
     };
+
+    const { theme } = useTheme();
 
     return (
         <>

@@ -16,7 +16,8 @@ const Router: React.FC = () => {
                 <Stack.Navigator
                     screenOptions={{
                         headerShown: false,
-                        animation: 'fade',
+                        animation: 'slide_from_right',
+                        gestureEnabled: true,
                     }}
                     initialRouteName={initialRoute}
                 >
@@ -25,6 +26,7 @@ const Router: React.FC = () => {
                             key={route.id}
                             name={route.name}
                             component={route.component}
+                            options={route.options}
                         />
                     ))}
                 </Stack.Navigator>

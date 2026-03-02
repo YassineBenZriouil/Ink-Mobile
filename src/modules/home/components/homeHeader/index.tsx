@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, Pressable, Image } from 'react-native';
 
-import styles from './styles';
+import useStyles from './styles';
 import DOWN_ICON from '@/assets/images/down.png';
 import BURGER_ICON from '@/assets/images/burger.png';
 import { preventMultiPress } from '@/tools/interactions';
@@ -17,6 +17,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
     onTitlePress,
     onMenuPress,
 }) => {
+    const styles = useStyles();
     const handleTitlePress = onTitlePress
         ? preventMultiPress(onTitlePress)
         : undefined;

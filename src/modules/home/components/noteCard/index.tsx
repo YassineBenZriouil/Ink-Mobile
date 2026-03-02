@@ -10,6 +10,7 @@ import {
 import styles from './styles';
 import { preventMultiPress, usePressScale } from '@/tools/interactions';
 import { tr } from '@/locales/i18n';
+import useStyles from './styles';
 
 interface NoteCardProps {
     title: string;
@@ -26,6 +27,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
     onPress,
     style,
 }) => {
+    const styles = useStyles();
     const handlePress = onPress ? preventMultiPress(onPress, 1000) : undefined;
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.99);
     const displayDate =

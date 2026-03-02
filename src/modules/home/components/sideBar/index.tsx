@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, Pressable, Image, ImageSourcePropType } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import styles from './styles';
+import useStyles from './styles';
 import { tr } from '@/locales/i18n';
 
 interface SidebarItem {
@@ -15,8 +15,10 @@ interface SideBarProps {
     sideBarItems?: SidebarItem[];
 }
 
-const SideBar: React.FC<DrawerContentComponentProps & SideBarProps> = ({sideBarItems}) => {
-
+const SideBar: React.FC<DrawerContentComponentProps & SideBarProps> = ({
+    sideBarItems,
+}) => {
+    const styles = useStyles();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -29,7 +31,7 @@ const SideBar: React.FC<DrawerContentComponentProps & SideBarProps> = ({sideBarI
                         key={item.id}
                         style={({ pressed }) => [
                             styles.itemWrapper,
-                            { opacity: pressed ? 0.7 : 1 }
+                            { opacity: pressed ? 0.7 : 1 },
                         ]}
                         onPress={item.onPress}
                     >

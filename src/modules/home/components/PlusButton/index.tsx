@@ -8,17 +8,24 @@ import {
 } from 'react-native';
 
 //styles
-import styles from './styles';
+import useStyles from './styles';
 import { preventMultiPress, usePressScale } from '@/tools/interactions';
-import PlusIcon  from '@/assets/images/plus.png'
+import PlusIcon from '@/assets/images/plus.png';
 
 interface PlusButtonProps {
     onPress: () => void;
     additionalStyle?: StyleProp<ViewStyle>;
 }
 
-const PlusButton: React.FC<PlusButtonProps> = ({ onPress, additionalStyle }) => {
-    const handlePress = useMemo(() => preventMultiPress(onPress, 1000), [onPress]);
+const PlusButton: React.FC<PlusButtonProps> = ({
+    onPress,
+    additionalStyle,
+}) => {
+    const styles = useStyles();
+    const handlePress = useMemo(
+        () => preventMultiPress(onPress, 1000),
+        [onPress],
+    );
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.95);
 
     return (

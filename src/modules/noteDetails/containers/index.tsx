@@ -3,18 +3,20 @@ import { View, Text, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useDeleteNote } from '@/hook/useDeleteNote';
 import GlobalConfirmationPopUp from '@/components/GlobalConfirmationPopUp';
-import { authStyles as styles } from './styles';
 import Header from '@/components/Header';
 import TrashIcon from '@/assets/images/trash.png';
 import ThemeIcon from '@/assets/images/brush.png';
 import ShareIcon from '@/assets/images/share.png';
-import COLORS from '@/theme';
 import { tr } from '@/locales/i18n';
 import { useAddNote } from '../hooks/useAddNote';
 import { useGetNote } from '../hooks/useGetNote';
 import { setStorage } from '@/tools/storage';
+import useStyles from './styles';
+import { useTheme } from '@/contexts/themeContext';
 
 const NoteDetails = () => {
+    const { theme } = useTheme();
+    const styles = useStyles();
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
     const { newNote, noteId: routeNoteId } = route.params || {};

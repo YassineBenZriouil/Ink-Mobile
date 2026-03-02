@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import { authStyles as styles } from './styles';
 import LOGO from '@/assets/images/logo.png';
 import Button from '@/components/Button';
 import { tr } from '@/locales/i18n';
 import ClickableText from '@/components/ClickableText';
+import useStyles from './styles';
 
 const PreAuth = () => {
+    const styles = useStyles();
     return (
         <View style={styles.container}>
             <View style={styles.logoContainer}>

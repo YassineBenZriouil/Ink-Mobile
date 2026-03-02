@@ -1,7 +1,7 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
 import { View, ViewStyle } from 'react-native';
-import styles from './styles';
+import useStyles from './styles';
 
 interface WritingFeatherAnimProps {
     style?: ViewStyle;
@@ -18,6 +18,7 @@ const WritingFeatherAnim: React.FC<WritingFeatherAnimProps> = ({
     loop = true,
     speed = 1,
 }) => {
+    const styles = useStyles();
     return (
         <View style={[styles.container, style]}>
             <LottieView

@@ -8,8 +8,8 @@ import {
     ViewStyle,
     ImageSourcePropType,
 } from 'react-native';
-import COLORS from '@/theme';
-import styles from './styles';
+import useStyles from './styles';
+import { useTheme } from '@/contexts/themeContext';
 
 export interface TabItem {
     id: string;
@@ -30,6 +30,9 @@ const TabToggler: React.FC<TabTogglerProps> = ({
     onTabChange,
     additionalStyle,
 }) => {
+    const styles = useStyles();
+    const { theme } = useTheme();
+
     const [width, setWidth] = useState(0);
     const translateX = useRef(new Animated.Value(0)).current;
 
