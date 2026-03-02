@@ -11,7 +11,7 @@ const useStyles = () => {
             ScaledSheet.create({
                 container: {
                     flex: 1,
-                    backgroundColor: '#000000',
+                    backgroundColor: theme.primary,
                     paddingHorizontal: '10@s',
                 },
                 logoContainer: {
@@ -24,14 +24,14 @@ const useStyles = () => {
                     resizeMode: 'contain',
                 },
                 title: {
-                    color: '#FFFFFF',
+                    color: theme.secondary,
                     fontSize: FONT_SIZES.f24,
                     fontWeight: '700',
                     marginTop: '20@vs',
                     letterSpacing: 1,
                 },
                 subtitle: {
-                    color: '#888888',
+                    color: theme.darkGray,
                     fontSize: FONT_SIZES.f16,
                     marginTop: '10@vs',
                     textAlign: 'center',

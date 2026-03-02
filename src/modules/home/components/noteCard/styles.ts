@@ -22,7 +22,7 @@ const useStyles = () => {
                 body: {
                     fontFamily: FONT_FAMILY.Regular,
                     fontSize: FONT_SIZES.f10,
-                    color: theme.gray,
+                    color: theme.secondary,
                 },
                 dateContainer: {
                     flexDirection: 'row',

@@ -10,6 +10,7 @@ export default {
             cancel: 'Cancel',
             confirm: 'Confirm',
             deleteConfirmation: 'Are you sure you want to delete this note?',
+            selectTheme: 'Select Theme',
         },
         preauth: {
             title: 'Where Thoughts Find Grace',
@@ -24,6 +25,7 @@ export default {
             notes: 'Notes',
             todos: "Todo's",
             noNotesText: 'No notes available',
+            noTodosText: 'No todos available',
             noTitle: 'No title',
             noContent: 'No content',
         },

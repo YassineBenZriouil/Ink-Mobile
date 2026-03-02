@@ -11,11 +11,12 @@ import {
 import useStyles from './styles';
 import closeIcon from '@/assets/images/close.png';
 import { t } from 'i18next';
+import Button from '@/components/Button';
 
 interface theme {
     id: string;
     name: string;
-    icon: string;
+    icon: any;
 }
 
 interface ThemesSelectorProps {
@@ -33,21 +34,17 @@ const ThemesSelector: React.FC<ThemesSelectorProps> = ({
     visible,
     onClose,
     onThemeClick,
-    theme
+    theme,
 }) => {
     const styles = useStyles();
     const renderItem = ({ item }: { item: theme }) => (
-        <TouchableOpacity
-            style={styles.themeItem}
+        <Button
+            additionalStyle={styles.themeItem}
+            text={item.name}
             onPress={() => onThemeClick(item)}
-        >
-            <Image
-                source={{ uri: item.icon }}
-                style={styles.themeIcon}
-                resizeMode="contain"
-            />
-            <Text style={styles.themeName}>{item.name}</Text>
-        </TouchableOpacity>
+            icon={item.icon}
+            textStyle={styles.themeName}
+        />
     );
 
     return (
@@ -71,12 +68,14 @@ const ThemesSelector: React.FC<ThemesSelectorProps> = ({
                                     style={styles.closeButtonImage}
                                 />
                             </TouchableOpacity>
-                            
-                            <Text style={styles.title}>{t('selectTheme')}</Text>
+
+                            <Text style={styles.title}>
+                                {t('app.selectTheme')}
+                            </Text>
 
                             <FlatList
                                 data={theme}
-                                keyExtractor={(item) => item.id}
+                                keyExtractor={item => item.id}
                                 renderItem={renderItem}
                                 style={styles.flatList}
                                 contentContainerStyle={styles.listContainer}

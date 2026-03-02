@@ -79,7 +79,7 @@ const useStyles = () => {
                     borderColor: theme.primary,
                 },
                 confirmButtonText: {
-                    fontSize: FONT_SIZES.f10,
+                    fontSize: FONT_SIZES.f8,
                     fontFamily: FONT_FAMILY.Regular,
                     color: theme.primary,
                 },
@@ -93,20 +93,17 @@ const useStyles = () => {
                 themeItem: {
                     flexDirection: 'row',
                     alignItems: 'center',
-                    paddingVertical: '12@vs',
-                    borderBottomWidth: 1,
-                    borderBottomColor: theme.secondary + '20', // subtle border
+                    marginBottom: '10@vs',
+                    borderRadius: '12@s',
+                    backgroundColor: theme.primary, // Contrasts nicely with the darkGray container
+                    borderWidth: 1,
+                    borderColor: theme.secondary + '15',
                     width: '100%',
                 },
-                themeIcon: {
-                    width: '24@s',
-                    height: '24@s',
-                    marginRight: '12@s',
-                    borderRadius: '12@s',
-                },
+
                 themeName: {
                     fontSize: FONT_SIZES.f12,
-                    fontFamily: FONT_FAMILY.Regular,
+                    fontFamily: FONT_FAMILY.SemiBold,
                     color: theme.secondary,
                 },
             }),

@@ -22,6 +22,7 @@ const useStyles = () => {
                 icon: {
                     width: '30@s',
                     height: '30@s',
+                    tintColor: theme.primary,
                 },
             }),
         [theme],
