@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     View,
     Modal,
@@ -34,10 +34,11 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
 }) => {
     const styles = useStyles();
     const { theme } = useTheme();
+    const scrollViewRef = useRef<ScrollView>(null);
 
-    const [mode, setMode] = useState<'selection' | 'single' | 'list'>(
-        'selection',
-    );
+    const [mode, setMode] = useState<
+        'selection' | 'single' | 'list-title' | 'list-items'
+    >('selection');
     const [title, setTitle] = useState('');
     const [subTodos, setSubTodos] = useState([
         { id: Date.now().toString(), title: '', isCompleted: false },
@@ -56,6 +57,12 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
         onClose();
     };
 
+    const handleNext = () => {
+        if (mode === 'list-title' && title.trim() !== '') {
+            setMode('list-items');
+        }
+    };
+
     const handleCreate = () => {
         // Filter out empty sub-todos
         const filteredSubTodos = subTodos.filter(
@@ -65,7 +72,7 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
         if (mode === 'single' && title.trim() !== '') {
             onSubmit('single', title.trim(), []);
             handleClose();
-        } else if (mode === 'list' && title.trim() !== '') {
+        } else if (mode === 'list-items' && title.trim() !== '') {
             onSubmit('list', title.trim(), filteredSubTodos);
             handleClose();
         }
@@ -76,6 +83,9 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
             ...subTodos,
             { id: Date.now().toString(), title: '', isCompleted: false },
         ]);
+        setTimeout(() => {
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 100);
     };
 
     const updateSubTodoTitle = (id: string, newTitle: string) => {
@@ -88,7 +98,7 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
 
     const isCreateDisabled = () => {
         if (mode === 'single') return title.trim() === '';
-        if (mode === 'list') return title.trim() === '';
+        if (mode === 'list-items') return title.trim() === '';
         return true;
     };
 
@@ -106,14 +116,16 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
         >
             <TouchableWithoutFeedback onPress={handleClose}>
                 <View style={styles.overlay}>
-                    <TouchableWithoutFeedback>
-                        <KeyboardAvoidingView
-                            behavior={
-                                Platform.OS === 'ios' ? 'padding' : undefined
-                            }
-                            style={styles.modalContentWrapper}
-                        >
-                            <View style={styles.container}>
+                    <KeyboardAvoidingView
+                        behavior={
+                            Platform.OS === 'ios' ? 'padding' : undefined
+                        }
+                        style={styles.modalContentWrapper}
+                    >
+                            <View
+                                style={styles.container}
+                                onStartShouldSetResponder={() => true}
+                            >
                                 {/* Close button */}
                                 <TouchableOpacity
                                     style={styles.closeButton}
@@ -140,7 +152,7 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             style={styles.modeButton}
-                                            onPress={() => setMode('list')}
+                                            onPress={() => setMode('list-title')}
                                         >
                                             <Text style={styles.modeButtonText}>
                                                 To Do List
@@ -171,7 +183,7 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                     </View>
                                 )}
 
-                                {mode === 'list' && (
+                                {mode === 'list-title' && (
                                     <View style={styles.contentContainer}>
                                         <TextInput
                                             style={styles.listTitleInput}
@@ -181,10 +193,26 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                             onChangeText={setTitle}
                                             autoFocus
                                         />
+                                    </View>
+                                )}
+
+                                {mode === 'list-items' && (
+                                    <View style={styles.contentContainer}>
+                                        <Text style={styles.listTitleLabel}>
+                                            {title}
+                                        </Text>
 
                                         <ScrollView
+                                            ref={scrollViewRef}
                                             style={styles.subTodosScroll}
-                                            showsVerticalScrollIndicator={false}
+                                            showsVerticalScrollIndicator
+                                            keyboardShouldPersistTaps="handled"
+                                            nestedScrollEnabled
+                                            onContentSizeChange={() =>
+                                                scrollViewRef.current?.scrollToEnd(
+                                                    { animated: true },
+                                                )
+                                            }
                                         >
                                             {subTodos.map(todo => (
                                                 <View
@@ -211,6 +239,12 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                                                 val,
                                                             )
                                                         }
+                                                        autoFocus={
+                                                            subTodos.indexOf(
+                                                                todo,
+                                                            ) ===
+                                                            subTodos.length - 1
+                                                        }
                                                     />
                                                 </View>
                                             ))}
@@ -231,7 +265,24 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                     </View>
                                 )}
 
-                                {mode !== 'selection' && (
+                                {mode === 'list-title' && (
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.createButton,
+                                            title.trim() === '' &&
+                                                styles.createButtonDisabled,
+                                        ]}
+                                        onPress={handleNext}
+                                        disabled={title.trim() === ''}
+                                    >
+                                        <Text style={styles.createButtonText}>
+                                            Next
+                                        </Text>
+                                    </TouchableOpacity>
+                                )}
+
+                                {(mode === 'single' ||
+                                    mode === 'list-items') && (
                                     <TouchableOpacity
                                         style={[
                                             styles.createButton,
@@ -247,8 +298,7 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
                                     </TouchableOpacity>
                                 )}
                             </View>
-                        </KeyboardAvoidingView>
-                    </TouchableWithoutFeedback>
+                    </KeyboardAvoidingView>
                 </View>
             </TouchableWithoutFeedback>
         </Modal>

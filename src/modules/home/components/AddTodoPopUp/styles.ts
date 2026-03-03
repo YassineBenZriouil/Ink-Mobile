@@ -29,7 +29,7 @@ const useStyles = () => {
                     alignItems: 'flex-start',
                     width: '320@s',
                     minHeight: '200@vs',
-                    maxHeight: '400@vs', // prevent it from growing off screen
+                    maxHeight: '500@vs', // prevent it from growing off screen
                 },
                 closeButton: {
                     position: 'absolute',
@@ -98,8 +98,15 @@ const useStyles = () => {
                     borderWidth: 0,
                     marginBottom: '20@vs',
                 },
+                listTitleLabel: {
+                    fontSize: FONT_SIZES.f14,
+                    fontFamily: FONT_FAMILY.SemiBold,
+                    color: theme.secondary,
+                    marginBottom: '20@vs',
+                },
                 subTodosScroll: {
                     width: '100%',
+                    flex: 1,
                 },
                 subTodoRow: {
                     flexDirection: 'row',
