@@ -15,11 +15,6 @@ const useStyles = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 },
-                modalContentWrapper: {
-                    width: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                },
                 container: {
                     backgroundColor: theme.primary, // Black background like NoteDetails
                     borderRadius: '20@s',
@@ -29,7 +24,7 @@ const useStyles = () => {
                     alignItems: 'flex-start',
                     width: '320@s',
                     minHeight: '200@vs',
-                    maxHeight: '500@vs', // prevent it from growing off screen
+                    maxHeight: '85%', // prevent it from growing off screen
                 },
                 closeButton: {
                     position: 'absolute',
@@ -74,7 +69,8 @@ const useStyles = () => {
                 contentContainer: {
                     width: '100%',
                     marginTop: '20@vs',
-                    flex: 1,
+                    flexShrink: 1,
+                    flexGrow: 1,
                 },
                 // SINGLE TODO STYLES
                 singleRow: {
@@ -106,7 +102,7 @@ const useStyles = () => {
                 },
                 subTodosScroll: {
                     width: '100%',
-                    flex: 1,
+                    flexShrink: 1,
                 },
                 subTodoRow: {
                     flexDirection: 'row',
@@ -129,8 +125,7 @@ const useStyles = () => {
                     backgroundColor: theme.darkGray,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    marginTop: '5@vs',
-                    marginLeft: '28@s', // Aligning under the text inputs
+                    marginLeft: '10@s',
                 },
                 addRowButtonDisabled: {
                     opacity: 0.3,

@@ -114,193 +114,193 @@ const AddTodoPopUp: React.FC<AddTodoPopUpProps> = ({
             animationType="fade"
             onRequestClose={handleClose}
         >
-            <TouchableWithoutFeedback onPress={handleClose}>
-                <View style={styles.overlay}>
-                    <KeyboardAvoidingView
-                        behavior={
-                            Platform.OS === 'ios' ? 'padding' : undefined
-                        }
-                        style={styles.modalContentWrapper}
-                    >
-                            <View
-                                style={styles.container}
-                                onStartShouldSetResponder={() => true}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={{ flex: 1 }}
+            >
+                <TouchableWithoutFeedback onPress={handleClose}>
+                    <View style={styles.overlay}>
+                        <View
+                            style={styles.container}
+                            onStartShouldSetResponder={() => true}
+                        >
+                            {/* Close button */}
+                            <TouchableOpacity
+                                style={styles.closeButton}
+                                onPress={handleClose}
                             >
-                                {/* Close button */}
-                                <TouchableOpacity
-                                    style={styles.closeButton}
-                                    onPress={handleClose}
-                                >
-                                    <Image
-                                        source={closeIcon}
-                                        style={styles.closeButtonImage}
-                                    />
-                                </TouchableOpacity>
+                                <Image
+                                    source={closeIcon}
+                                    style={styles.closeButtonImage}
+                                />
+                            </TouchableOpacity>
 
-                                {mode === 'selection' && (
-                                    <View style={styles.selectionContainer}>
-                                        <Text style={styles.selectionTitle}>
-                                            Choose Type
+                            {mode === 'selection' && (
+                                <View style={styles.selectionContainer}>
+                                    <Text style={styles.selectionTitle}>
+                                        Choose Type
+                                    </Text>
+                                    <TouchableOpacity
+                                        style={styles.modeButton}
+                                        onPress={() => setMode('single')}
+                                    >
+                                        <Text style={styles.modeButtonText}>
+                                            A To Do
                                         </Text>
-                                        <TouchableOpacity
-                                            style={styles.modeButton}
-                                            onPress={() => setMode('single')}
-                                        >
-                                            <Text style={styles.modeButtonText}>
-                                                A To Do
-                                            </Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={styles.modeButton}
-                                            onPress={() => setMode('list-title')}
-                                        >
-                                            <Text style={styles.modeButtonText}>
-                                                To Do List
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.modeButton}
+                                        onPress={() => setMode('list-title')}
+                                    >
+                                        <Text style={styles.modeButtonText}>
+                                            To Do List
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
 
-                                {mode === 'single' && (
-                                    <View style={styles.contentContainer}>
-                                        <View style={styles.singleRow}>
-                                            <Checkbox
-                                                value={false}
-                                                disabled
-                                                size={24}
-                                            />
-                                            <TextInput
-                                                style={styles.singleInput}
-                                                placeholder="What needs to be done?"
-                                                placeholderTextColor={
-                                                    theme.gray
-                                                }
-                                                value={title}
-                                                onChangeText={setTitle}
-                                                autoFocus
-                                            />
-                                        </View>
-                                    </View>
-                                )}
-
-                                {mode === 'list-title' && (
-                                    <View style={styles.contentContainer}>
+                            {mode === 'single' && (
+                                <View style={styles.contentContainer}>
+                                    <View style={styles.singleRow}>
+                                        <Checkbox
+                                            value={false}
+                                            disabled
+                                            size={24}
+                                        />
                                         <TextInput
-                                            style={styles.listTitleInput}
-                                            placeholder="To Do List title"
+                                            style={styles.singleInput}
+                                            placeholder="What needs to be done?"
                                             placeholderTextColor={theme.gray}
                                             value={title}
                                             onChangeText={setTitle}
                                             autoFocus
                                         />
                                     </View>
-                                )}
+                                </View>
+                            )}
 
-                                {mode === 'list-items' && (
-                                    <View style={styles.contentContainer}>
-                                        <Text style={styles.listTitleLabel}>
-                                            {title}
-                                        </Text>
+                            {mode === 'list-title' && (
+                                <View style={styles.contentContainer}>
+                                    <TextInput
+                                        style={styles.listTitleInput}
+                                        placeholder="To Do List title"
+                                        placeholderTextColor={theme.gray}
+                                        value={title}
+                                        onChangeText={setTitle}
+                                        autoFocus
+                                    />
+                                </View>
+                            )}
 
-                                        <ScrollView
-                                            ref={scrollViewRef}
-                                            style={styles.subTodosScroll}
-                                            showsVerticalScrollIndicator
-                                            keyboardShouldPersistTaps="handled"
-                                            nestedScrollEnabled
-                                            onContentSizeChange={() =>
-                                                scrollViewRef.current?.scrollToEnd(
-                                                    { animated: true },
-                                                )
-                                            }
-                                        >
-                                            {subTodos.map(todo => (
-                                                <View
-                                                    key={todo.id}
-                                                    style={styles.subTodoRow}
-                                                >
-                                                    <Checkbox
-                                                        value={false}
-                                                        disabled
-                                                        size={18}
-                                                    />
-                                                    <TextInput
-                                                        style={
-                                                            styles.subTodoInput
-                                                        }
-                                                        placeholder="Task details"
-                                                        placeholderTextColor={
-                                                            theme.gray
-                                                        }
-                                                        value={todo.title}
-                                                        onChangeText={val =>
-                                                            updateSubTodoTitle(
-                                                                todo.id,
-                                                                val,
-                                                            )
-                                                        }
-                                                        autoFocus={
-                                                            subTodos.indexOf(
-                                                                todo,
-                                                            ) ===
-                                                            subTodos.length - 1
-                                                        }
-                                                    />
-                                                </View>
-                                            ))}
-                                            <TouchableOpacity
-                                                style={[
-                                                    styles.addRowButton,
-                                                    isAddRowDisabled &&
-                                                        styles.addRowButtonDisabled,
-                                                ]}
-                                                onPress={addSubTodoRow}
-                                                disabled={isAddRowDisabled}
+                            {mode === 'list-items' && (
+                                <View style={styles.contentContainer}>
+                                    <Text style={styles.listTitleLabel}>
+                                        {title}
+                                    </Text>
+
+                                    <ScrollView
+                                        ref={scrollViewRef}
+                                        style={styles.subTodosScroll}
+                                        showsVerticalScrollIndicator
+                                        keyboardShouldPersistTaps="handled"
+                                        nestedScrollEnabled
+                                        onContentSizeChange={() =>
+                                            scrollViewRef.current?.scrollToEnd({
+                                                animated: true,
+                                            })
+                                        }
+                                    >
+                                        {subTodos.map((todo, index) => (
+                                            <View
+                                                key={todo.id}
+                                                style={styles.subTodoRow}
                                             >
-                                                <Text style={styles.addRowPlus}>
-                                                    +
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </ScrollView>
-                                    </View>
-                                )}
+                                                <Checkbox
+                                                    value={false}
+                                                    disabled
+                                                    size={18}
+                                                />
+                                                <TextInput
+                                                    style={styles.subTodoInput}
+                                                    placeholder="Task details"
+                                                    placeholderTextColor={
+                                                        theme.gray
+                                                    }
+                                                    value={todo.title}
+                                                    onChangeText={val =>
+                                                        updateSubTodoTitle(
+                                                            todo.id,
+                                                            val,
+                                                        )
+                                                    }
+                                                    autoFocus={
+                                                        index ===
+                                                        subTodos.length - 1
+                                                    }
+                                                />
+                                                {index ===
+                                                    subTodos.length - 1 && (
+                                                    <TouchableOpacity
+                                                        style={[
+                                                            styles.addRowButton,
+                                                            isAddRowDisabled &&
+                                                                styles.addRowButtonDisabled,
+                                                        ]}
+                                                        onPress={addSubTodoRow}
+                                                        disabled={
+                                                            isAddRowDisabled
+                                                        }
+                                                    >
+                                                        <Text
+                                                            style={
+                                                                styles.addRowPlus
+                                                            }
+                                                        >
+                                                            +
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                )}
+                                            </View>
+                                        ))}
+                                    </ScrollView>
+                                </View>
+                            )}
 
-                                {mode === 'list-title' && (
-                                    <TouchableOpacity
-                                        style={[
-                                            styles.createButton,
-                                            title.trim() === '' &&
-                                                styles.createButtonDisabled,
-                                        ]}
-                                        onPress={handleNext}
-                                        disabled={title.trim() === ''}
-                                    >
-                                        <Text style={styles.createButtonText}>
-                                            Next
-                                        </Text>
-                                    </TouchableOpacity>
-                                )}
+                            {mode === 'list-title' && (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.createButton,
+                                        title.trim() === '' &&
+                                            styles.createButtonDisabled,
+                                    ]}
+                                    onPress={handleNext}
+                                    disabled={title.trim() === ''}
+                                >
+                                    <Text style={styles.createButtonText}>
+                                        Next
+                                    </Text>
+                                </TouchableOpacity>
+                            )}
 
-                                {(mode === 'single' ||
-                                    mode === 'list-items') && (
-                                    <TouchableOpacity
-                                        style={[
-                                            styles.createButton,
-                                            isCreateDisabled() &&
-                                                styles.createButtonDisabled,
-                                        ]}
-                                        onPress={handleCreate}
-                                        disabled={isCreateDisabled()}
-                                    >
-                                        <Text style={styles.createButtonText}>
-                                            Create
-                                        </Text>
-                                    </TouchableOpacity>
-                                )}
-                            </View>
-                    </KeyboardAvoidingView>
-                </View>
-            </TouchableWithoutFeedback>
+                            {(mode === 'single' || mode === 'list-items') && (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.createButton,
+                                        isCreateDisabled() &&
+                                            styles.createButtonDisabled,
+                                    ]}
+                                    onPress={handleCreate}
+                                    disabled={isCreateDisabled()}
+                                >
+                                    <Text style={styles.createButtonText}>
+                                        Create
+                                    </Text>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </Modal>
     );
 };

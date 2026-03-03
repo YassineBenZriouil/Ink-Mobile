@@ -95,18 +95,18 @@ const NoteDetails = () => {
             icon: TrashIcon,
             onPress: () => setIsDeleteModalVisible(true),
         },
-        {
-            id: '2',
-            name: tr('app.theme'),
-            icon: ThemeIcon,
-            onPress: () => console.log('Theme'),
-        },
-        {
-            id: '3',
-            name: tr('app.share'),
-            icon: ShareIcon,
-            onPress: () => console.log('Share'),
-        },
+        // {
+        //     id: '2',
+        //     name: tr('app.theme'),
+        //     icon: ThemeIcon,
+        //     onPress: () => console.log('Theme'),
+        // },
+        // {
+        //     id: '3',
+        //     name: tr('app.share'),
+        //     icon: ShareIcon,
+        //     onPress: () => console.log('Share'),
+        // },
     ];
 
     return (

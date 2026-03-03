@@ -28,6 +28,11 @@ export default {
             noTodosText: 'No todos available',
             noTitle: 'No title',
             noContent: 'No content',
+            deleteNote: 'Delete Note',
+            deleteNoteConfirm: 'Are you sure you want to delete this note?',
+            deleteTodo: 'Delete To-Do',
+            deleteTodoConfirm:
+                'Are you sure you want to delete this to-do list?',
         },
     },
 };

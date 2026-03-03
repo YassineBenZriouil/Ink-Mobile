@@ -6,6 +6,7 @@ import PlusButton from '@/modules/home/components/PlusButton';
 import NoteCard from '@/modules/home/components/noteCard';
 import TodoCard from '@/modules/home/components/todoCard';
 import AddTodoPopUp from '@/modules/home/components/AddTodoPopUp';
+import GlobalConfirmationPopUp from '@/components/GlobalConfirmationPopUp';
 import { navigate } from '@/tools/navigation';
 import ThemesSelector from '@/components/ThmesSelector';
 
@@ -23,15 +24,26 @@ import { TodoData } from '@/modules/home/hooks/useAddTodo';
 import { tr } from '@/locales/i18n';
 import ThemeIcon from '@/assets/images/brush.png';
 import SettingsIcon from '@/assets/images/gear.png';
+import TrashIcon from '@/assets/images/trash.png';
 import useStyles from './styles';
 import { useTheme } from '@/contexts/themeContext';
 import { DARK_THEME, LIGHT_THEME } from '@/theme/colors';
+import { useDeleteNote } from '@/hook/useDeleteNote';
 
 const HomeContent = () => {
     const { theme } = useTheme();
     const styles = useStyles();
     const [activeTab, setActiveTab] = useState('note');
     const [isAddTodoVisible, setIsAddTodoVisible] = useState(false);
+
+    // Global Confirmation Pop-Up state for deletion
+    const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
+        useState(false);
+    const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+    const [deleteType, setDeleteType] = useState<'note' | 'todo' | null>(null);
+
+    const { deleteNote, isLoading: isDeleting } = useDeleteNote();
+
     const navigation = useNavigation();
 
     const handleTabChange = (tabId: string) => {
@@ -142,6 +154,38 @@ const HomeContent = () => {
         </View>
     );
 
+    const handleDeleteNote = (noteId: string) => {
+        setDeleteTargetId(noteId);
+        setDeleteType('note');
+        setDeleteConfirmationVisible(true);
+    };
+
+    const handleDeleteTodo = (todoId: string) => {
+        setDeleteTargetId(todoId);
+        setDeleteType('todo');
+        setDeleteConfirmationVisible(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!deleteTargetId || !deleteType) return;
+
+        try {
+            deleteNote(deleteTargetId);
+            if (deleteType === 'note') {
+                refreshNotes();
+            } else {
+                refreshTodos();
+            }
+
+            // Reset state
+            setDeleteConfirmationVisible(false);
+            setDeleteTargetId(null);
+            setDeleteType(null);
+        } catch (error) {
+            console.error('Delete failed', error);
+        }
+    };
+
     const renderItem = ({ item }: { item: any }) => {
         if (activeTab === 'note') {
             const noteItem = item as NoteItem;
@@ -153,6 +197,14 @@ const HomeContent = () => {
                     onPress={() =>
                         navigate('NoteDetails', { noteId: noteItem.id })
                     }
+                    options={[
+                        {
+                            id: 'delete',
+                            name: tr('app.delete'),
+                            icon: TrashIcon,
+                            onPress: () => handleDeleteNote(noteItem.id),
+                        },
+                    ]}
                 />
             );
         } else {
@@ -168,6 +220,14 @@ const HomeContent = () => {
                     onToggleSubTodo={(subId, val) =>
                         handleToggleSubTodo(todoItem, subId, val)
                     }
+                    options={[
+                        {
+                            id: 'delete',
+                            name: tr('app.delete'),
+                            icon: TrashIcon,
+                            onPress: () => handleDeleteTodo(todoItem.id),
+                        },
+                    ]}
                 />
             );
         }
@@ -228,6 +288,27 @@ const HomeContent = () => {
                 onSubmit={(mode, title, subTodos) => {
                     addTodo(title, subTodos, false);
                     setTimeout(() => refreshTodos(), 500); // Wait for MMKV to save then refresh list
+                }}
+            />
+
+            <GlobalConfirmationPopUp
+                visible={deleteConfirmationVisible}
+                title={
+                    deleteType === 'note'
+                        ? tr('home.deleteNote')
+                        : tr('home.deleteTodo')
+                }
+                message={
+                    deleteType === 'note'
+                        ? tr('home.deleteNoteConfirm')
+                        : tr('home.deleteTodoConfirm')
+                }
+                onConfirm={handleConfirmDelete}
+                loading={isDeleting}
+                onClose={() => {
+                    setDeleteConfirmationVisible(false);
+                    setDeleteTargetId(null);
+                    setDeleteType(null);
                 }}
             />
         </View>

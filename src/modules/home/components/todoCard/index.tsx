@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
     View,
     Text,
@@ -11,6 +11,7 @@ import { usePressScale } from '@/tools/interactions';
 import useStyles from './styles';
 import Checkbox from './components/Checkbox';
 import { TodoData, TodoItem } from '../../hooks/useAddTodo';
+import ItemOptions, { OptionsProps } from '@/components/ItemOptions';
 
 export interface TodoCardProps {
     data: TodoData;
@@ -18,6 +19,7 @@ export interface TodoCardProps {
     onToggleMain?: (newValue: boolean) => void;
     onToggleSubTodo?: (todoId: string, newValue: boolean) => void;
     style?: StyleProp<ViewStyle>;
+    options?: OptionsProps[];
 }
 
 const TodoCard: React.FC<TodoCardProps> = ({
@@ -26,9 +28,11 @@ const TodoCard: React.FC<TodoCardProps> = ({
     onToggleMain,
     onToggleSubTodo,
     style,
+    options,
 }) => {
     const styles = useStyles();
     const { scaleAnim, handlePressIn, handlePressOut } = usePressScale(0.99);
+    const menuRef = useRef<any>(null);
 
     const hasSubTodos = data.todos && data.todos.length > 0;
 
@@ -37,9 +41,28 @@ const TodoCard: React.FC<TodoCardProps> = ({
             <Pressable
                 style={[styles.container, style]}
                 onPress={onPress}
+                onLongPress={() => {
+                    if (options && options.length > 0) {
+                        menuRef.current?.open();
+                    }
+                }}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
             >
+                {options && options.length > 0 && (
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 20,
+                            right: 20,
+                            zIndex: 10,
+                        }}
+                    >
+                        <ItemOptions ref={menuRef} options={options}>
+                            <View style={{ width: 1, height: 1 }} />
+                        </ItemOptions>
+                    </View>
+                )}
                 <View style={styles.mainRow}>
                     <Checkbox
                         value={data.isCompleted}

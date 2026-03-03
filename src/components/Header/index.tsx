@@ -1,28 +1,11 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    Pressable,
-    Animated,
-    Image,
-    ViewStyle,
-    ImageSourcePropType,
-} from 'react-native';
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import { View, Text, Pressable, Image, ViewStyle } from 'react-native';
 import useStyles from './styles';
 
 import BackIcon from '@/assets/images/back.png';
-import OptionsIcon from '@/assets/images/more.png';
 import { goBack } from '@/tools/navigation';
 import { truncateText } from '@/tools/interactions';
-import { useTheme } from '@/contexts/themeContext';
-
-interface OptionsProps {
-    id: string;
-    name: string;
-    icon: ImageSourcePropType;
-    onPress: () => void;
-}
+import ItemOptions, { OptionsProps } from '../ItemOptions';
 
 interface HeaderProps {
     back?: boolean;
@@ -53,40 +36,7 @@ const Header: React.FC<HeaderProps> = ({
             </View>
             <View style={styles.rightContainer}>
                 {options && options.length > 0 && (
-                    <Menu>
-                        <MenuTrigger>
-                            <Image
-                                source={OptionsIcon}
-                                style={styles.moreIcon}
-                            />
-                        </MenuTrigger>
-                        <MenuOptions
-                            customStyles={{
-                                optionsContainer: styles.menuOptionsContainer,
-                            }}
-                        >
-                            {options.map(option => (
-                                <MenuOption
-                                    key={option.id}
-                                    onSelect={option.onPress}
-                                    customStyles={{
-                                        optionWrapper:
-                                            styles.menuOptionWrapper as any,
-                                    }}
-                                >
-                                    {option.icon && (
-                                        <Image
-                                            source={option.icon}
-                                            style={styles.menuIcon}
-                                        />
-                                    )}
-                                    <Text style={styles.menuOptionText}>
-                                        {option.name}
-                                    </Text>
-                                </MenuOption>
-                            ))}
-                        </MenuOptions>
-                    </Menu>
+                    <ItemOptions options={options} />
                 )}
             </View>
         </View>
