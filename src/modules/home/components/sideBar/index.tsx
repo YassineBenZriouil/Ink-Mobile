@@ -3,12 +3,14 @@ import { View, Text, Pressable, Image, ImageSourcePropType } from 'react-native'
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import useStyles from './styles';
 import { tr } from '@/locales/i18n';
+import { useTheme } from '@/contexts/themeContext';
 
 interface SidebarItem {
     id: string;
     name: string;
     icon?: ImageSourcePropType;
     onPress: () => void;
+    color?: string;
 }
 
 interface SideBarProps {
@@ -19,6 +21,7 @@ const SideBar: React.FC<DrawerContentComponentProps & SideBarProps> = ({
     sideBarItems,
 }) => {
     const styles = useStyles();
+    const { theme } = useTheme();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -36,9 +39,26 @@ const SideBar: React.FC<DrawerContentComponentProps & SideBarProps> = ({
                         onPress={item.onPress}
                     >
                         {item.icon && (
-                            <Image source={item.icon} style={styles.itemIcon} />
+                            <Image
+                                source={item.icon}
+                                style={[
+                                    styles.itemIcon,
+                                    item.color
+                                        ? { tintColor: item.color }
+                                        : { tintColor: theme.secondary },
+                                ]}
+                            />
                         )}
-                        <Text style={styles.itemText}>{item.name}</Text>
+                        <Text
+                            style={[
+                                styles.itemText,
+                                item.color
+                                    ? { color: item.color }
+                                    : { color: theme.secondary },
+                            ]}
+                        >
+                            {item.name}
+                        </Text>
                     </Pressable>
                 ))}
             </View>

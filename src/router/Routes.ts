@@ -2,11 +2,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import PreauthRoutes from '@/modules/preAuth/routes';
 import HomeRoutes from '@/modules/home/routes';
 import NoteDetailsRoutes from '@/modules/noteDetails/routes';
+import SignUpRoutes from '@/modules/auth/signUp/routes';
+import SignInRoutes from '@/modules/auth/signIn/routes';
 
 export type RootStackParamList = {
     PreAuth: undefined;
     Home: undefined;
     NoteDetails: undefined;
+    SignUp: undefined;
+    SignIn: undefined;
 };
 
 declare global {
@@ -30,6 +34,8 @@ const Routes: RouteConfig[] = [
     ...PreauthRoutes,
     ...HomeRoutes,
     ...NoteDetailsRoutes,
+    ...SignUpRoutes,
+    ...SignInRoutes,
 ];
 
 export default Routes;

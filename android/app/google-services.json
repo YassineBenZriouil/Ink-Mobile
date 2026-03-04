@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "534728639511",
+    "project_id": "ink-1059d",
+    "storage_bucket": "ink-1059d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534728639511:android:23f9fccc5cf88502754852",
+        "android_client_info": {
+          "package_name": "com.ink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUeM7j_fTFZiKp4pPlsi8WLcQAshXo3y4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

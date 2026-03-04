@@ -38,13 +38,11 @@ const useStyles = () => {
                 itemIcon: {
                     width: '20@s',
                     height: '20@s',
-                    tintColor: theme.secondary,
                     marginRight: '15@s',
                 },
                 itemText: {
                     fontSize: FONT_SIZES.f12,
                     fontFamily: FONT_FAMILY.Regular,
-                    color: theme.secondary,
                 },
             }),
         [theme],

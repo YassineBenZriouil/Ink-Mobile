@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { View, FlatList, Text, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, ActivityIndicator, Alert } from 'react-native';
 import HomeHeader from '@/modules/home/components/homeHeader';
 import TabToggler from '@/components/TabToggler';
 import PlusButton from '@/modules/home/components/PlusButton';
@@ -29,9 +29,16 @@ import useStyles from './styles';
 import { useTheme } from '@/contexts/themeContext';
 import { DARK_THEME, LIGHT_THEME } from '@/theme/colors';
 import { useDeleteNote } from '@/hook/useDeleteNote';
+import LogoutIcon from '@/assets/images/logout.png';
+import { useLogout } from '@/hook/useLogout';
+import { useGlobalStore } from '@/store/globalStore';
+import { displayToast, truncateText } from '@/tools/interactions';
+import { useUpdateRemote } from '@/data/updateRemote';
+import SyncIcon from '@/assets/images/sync.png';
 
 const HomeContent = () => {
     const { theme } = useTheme();
+    const currentUser = useGlobalStore(state => state.currentUser);
     const styles = useStyles();
     const [activeTab, setActiveTab] = useState('note');
     const [isAddTodoVisible, setIsAddTodoVisible] = useState(false);
@@ -55,6 +62,17 @@ const HomeContent = () => {
             navigate('NoteDetails', { newNote: true });
         } else {
             setIsAddTodoVisible(true);
+        }
+    };
+
+    const { syncToRemote, isLoading: isSyncing } = useUpdateRemote();
+
+    const handleSync = async () => {
+        const success = await syncToRemote();
+        if (success) {
+            displayToast('Sync Complete');
+        } else {
+            displayToast('Sync Failed');
         }
     };
 
@@ -245,7 +263,7 @@ const HomeContent = () => {
     const handleRefresh = activeTab === 'note' ? refreshNotes : refreshTodos;
     const handleLoadMore = activeTab === 'note' ? loadMoreNotes : loadMoreTodos;
 
-    const UserName = 'John Doe';
+    const UserName = truncateText(currentUser?.email || '', 20);
 
     return (
         <View style={styles.container}>
@@ -279,7 +297,17 @@ const HomeContent = () => {
             />
 
             <View style={styles.plusButton}>
-                <PlusButton onPress={handlePlusPress} />
+                <View style={{ flexDirection: 'row', gap: 10 }}>
+                    <PlusButton
+                        onPress={handleSync}
+                        additionalStyle={{ backgroundColor: theme.darkGray }}
+                        iconStyle={{ tintColor: theme.secondary }}
+                        icon={SyncIcon}
+                        loading={isSyncing}
+                        disabled={isSyncing}
+                    />
+                    <PlusButton onPress={handlePlusPress} />
+                </View>
             </View>
 
             <AddTodoPopUp
@@ -333,6 +361,9 @@ const themes = [
 const Home = () => {
     const styles = useStyles();
     const [isThemeSelectorVisible, setIsThemeSelectorVisible] = useState(false);
+    const [logoutConfirmationVisible, setLogoutConfirmationVisible] =
+        useState(false);
+    const { logout, isLoading: isLoggingOut } = useLogout();
 
     const sideBarItems = [
         {
@@ -350,6 +381,13 @@ const Home = () => {
             onPress: () => {
                 console.log('Navigate to Settings!');
             },
+        },
+        {
+            id: '3',
+            name: tr('app.logout'),
+            icon: LogoutIcon,
+            onPress: () => setLogoutConfirmationVisible(true),
+            color: 'red',
         },
     ];
 
@@ -388,6 +426,15 @@ const Home = () => {
                 onClose={() => setIsThemeSelectorVisible(false)}
                 onThemeClick={handleThemeClick}
                 theme={themes}
+            />
+
+            <GlobalConfirmationPopUp
+                visible={logoutConfirmationVisible}
+                title={tr('app.logout')}
+                message={tr('app.logoutConfirmation')}
+                onConfirm={logout}
+                loading={isLoggingOut}
+                onClose={() => setLogoutConfirmationVisible(false)}
             />
         </>
     );

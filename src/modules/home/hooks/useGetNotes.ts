@@ -72,7 +72,13 @@ export const useGetNotes = () => {
                 if (isRefresh) {
                     setNotes(newNotes);
                 } else {
-                    setNotes(prev => [...prev, ...newNotes]);
+                    setNotes(prev => {
+                        const existingIds = new Set(prev.map(n => n.id));
+                        const uniqueNew = newNotes.filter(
+                            n => !existingIds.has(n.id),
+                        );
+                        return [...prev, ...uniqueNew];
+                    });
                 }
 
                 setCurrentPointer(i);

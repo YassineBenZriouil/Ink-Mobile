@@ -11,11 +11,28 @@ export default {
             confirm: 'Confirm',
             deleteConfirmation: 'Are you sure you want to delete this note?',
             selectTheme: 'Select Theme',
+            logout: 'Logout',
+            logoutConfirmation: 'Are you sure you want to log out?',
         },
         preauth: {
             title: 'Where Thoughts Find Grace',
             login: 'Login',
             signin: 'Sign In',
+        },
+        signUp: {
+            title: 'Sign Up',
+            email: 'Email',
+            password: 'Password',
+            confirmPassword: 'Confirm Password',
+            submit: 'Sign Up',
+            haveAccount: 'Already have an account? Sign In',
+        },
+        signIn: {
+            title: 'Sign In',
+            email: 'Email',
+            password: 'Password',
+            submit: 'Sign In',
+            noAccount: "Don't have an account? Sign Up",
         },
         noteDetails: {
             titlePlaceHolder: 'Title',

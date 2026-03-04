@@ -62,7 +62,13 @@ export const useGetTodos = () => {
                 if (isRefresh) {
                     setTodos(newTodos);
                 } else {
-                    setTodos(prev => [...prev, ...newTodos]);
+                    setTodos(prev => {
+                        const existingIds = new Set(prev.map(t => t.id));
+                        const uniqueNew = newTodos.filter(
+                            t => !existingIds.has(t.id),
+                        );
+                        return [...prev, ...uniqueNew];
+                    });
                 }
 
                 setCurrentPointer(i);
