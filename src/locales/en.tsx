@@ -13,11 +13,14 @@ export default {
             selectTheme: 'Select Theme',
             logout: 'Logout',
             logoutConfirmation: 'Are you sure you want to log out?',
+            login: 'Login',
         },
         preauth: {
             title: 'Where Thoughts Find Grace',
+            subtitle: 'Sync your notes across devices',
             login: 'Login',
             signin: 'Sign In',
+            guest: 'Proceed Locally (Without Syncing Notes)',
         },
         signUp: {
             title: 'Sign Up',
@@ -50,6 +53,13 @@ export default {
             deleteTodo: 'Delete To-Do',
             deleteTodoConfirm:
                 'Are you sure you want to delete this to-do list?',
+        },
+        settings: {
+            title: 'Settings',
+            notifications: 'Notifications',
+            darkMode: 'Dark Mode',
+            language: 'Language',
+            fontSize: 'Font Size',
         },
     },
 };

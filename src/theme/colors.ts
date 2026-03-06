@@ -9,7 +9,7 @@ const LIGHT_THEME = {
     primary: '#ffffffff',
     secondary: '#000000ff',
     gray: '#888888',
-    darkGray: '#c2c2c2ff',
+    darkGray: '#f0f0f0ff',
 };
 
 export { DARK_THEME, LIGHT_THEME };

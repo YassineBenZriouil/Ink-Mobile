@@ -20,6 +20,7 @@ const PreAuth = () => {
             </View>
 
             <View style={styles.buttonContainer}>
+                <Text style={styles.subtitle2}>{tr('preauth.subtitle')}</Text>
                 <Button
                     text={tr('preauth.login')}
                     onPress={() => navigation.navigate('SignIn')}
@@ -33,7 +34,7 @@ const PreAuth = () => {
                     withShadow
                 />
                 <ClickableText
-                    text="Proceed WithOut Syncing Notes"
+                    text={tr('preauth.guest')}
                     onPress={() => {
                         navigate('Home');
                     }}

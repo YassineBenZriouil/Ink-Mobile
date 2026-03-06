@@ -4,6 +4,7 @@ import HomeRoutes from '@/modules/home/routes';
 import NoteDetailsRoutes from '@/modules/noteDetails/routes';
 import SignUpRoutes from '@/modules/auth/signUp/routes';
 import SignInRoutes from '@/modules/auth/signIn/routes';
+import SettingsRoutes from '@/modules/settings/routes';
 
 export type RootStackParamList = {
     PreAuth: undefined;
@@ -11,6 +12,7 @@ export type RootStackParamList = {
     NoteDetails: undefined;
     SignUp: undefined;
     SignIn: undefined;
+    Settings: undefined;
 };
 
 declare global {
@@ -36,6 +38,7 @@ const Routes: RouteConfig[] = [
     ...NoteDetailsRoutes,
     ...SignUpRoutes,
     ...SignInRoutes,
+    ...SettingsRoutes,
 ];
 
 export default Routes;

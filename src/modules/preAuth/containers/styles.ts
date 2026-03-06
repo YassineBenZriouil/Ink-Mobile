@@ -33,6 +33,13 @@ const useStyles = () => {
                     marginTop: '10@s',
                     textAlign: 'center',
                 },
+                subtitle2: {
+                    color: theme.gray,
+                    fontSize: FONT_SIZES.f10,
+                    fontFamily: FONT_FAMILY.Regular,
+                    marginBottom: '10@s',
+                    textAlign: 'center',
+                },
                 buttonContainer: {
                     width: '100%',
                     gap: '15@s',

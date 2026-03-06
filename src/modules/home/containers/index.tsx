@@ -35,6 +35,7 @@ import { useGlobalStore } from '@/store/globalStore';
 import { displayToast, truncateText } from '@/tools/interactions';
 import { useUpdateRemote } from '@/data/updateRemote';
 import SyncIcon from '@/assets/images/sync.png';
+import FeatherIcon from '@/assets/images/feather.png';
 
 const HomeContent = () => {
     const { theme } = useTheme();
@@ -263,7 +264,7 @@ const HomeContent = () => {
     const handleRefresh = activeTab === 'note' ? refreshNotes : refreshTodos;
     const handleLoadMore = activeTab === 'note' ? loadMoreNotes : loadMoreTodos;
 
-    const UserName = truncateText(currentUser?.email || '', 20);
+    const UserName = truncateText(currentUser?.email || 'Local', 20);
 
     return (
         <View style={styles.container}>
@@ -298,14 +299,18 @@ const HomeContent = () => {
 
             <View style={styles.plusButton}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
-                    <PlusButton
-                        onPress={handleSync}
-                        additionalStyle={{ backgroundColor: theme.darkGray }}
-                        iconStyle={{ tintColor: theme.secondary }}
-                        icon={SyncIcon}
-                        loading={isSyncing}
-                        disabled={isSyncing}
-                    />
+                    {currentUser && (
+                        <PlusButton
+                            onPress={handleSync}
+                            additionalStyle={{
+                                backgroundColor: theme.darkGray,
+                            }}
+                            iconStyle={{ tintColor: theme.secondary }}
+                            icon={SyncIcon}
+                            loading={isSyncing}
+                            disabled={isSyncing}
+                        />
+                    )}
                     <PlusButton onPress={handlePlusPress} />
                 </View>
             </View>
@@ -360,6 +365,7 @@ const themes = [
 
 const Home = () => {
     const styles = useStyles();
+    const currentUser = useGlobalStore(state => state.currentUser);
     const [isThemeSelectorVisible, setIsThemeSelectorVisible] = useState(false);
     const [logoutConfirmationVisible, setLogoutConfirmationVisible] =
         useState(false);
@@ -378,17 +384,26 @@ const Home = () => {
             id: '2',
             name: tr('app.settings'),
             icon: SettingsIcon,
-            onPress: () => {
-                console.log('Navigate to Settings!');
-            },
+            onPress: () => navigate('Settings'),
         },
-        {
-            id: '3',
-            name: tr('app.logout'),
-            icon: LogoutIcon,
-            onPress: () => setLogoutConfirmationVisible(true),
-            color: 'red',
-        },
+        ...(currentUser
+            ? [
+                  {
+                      id: '3',
+                      name: tr('app.logout'),
+                      icon: LogoutIcon,
+                      onPress: () => setLogoutConfirmationVisible(true),
+                      color: 'red',
+                  },
+              ]
+            : [
+                  {
+                      id: '3',
+                      name: tr('app.login'),
+                      icon: FeatherIcon,
+                      onPress: () => navigate('PreAuth'),
+                  },
+              ]),
     ];
 
     const { theme, setTheme } = useTheme();
